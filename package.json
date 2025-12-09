@@ -11,12 +11,12 @@
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
+    "analyze": "ANALYZE=true npm run build",
     "security:audit": "npm audit --audit-level high",
     "security:snyk": "snyk test",
     "security:snyk:monitor": "snyk monitor",
     "prepare": "husky",
     "semantic-release": "semantic-release",
-    "semantic-release": "semantic-release"
     "backup": "node scripts/backup-data.js",
     "restore": "node scripts/restore-data.js",
     "validate-data": "node scripts/validate-data.js"
@@ -41,7 +41,7 @@
     "express-rate-limit": "^8.2.1",
     "lucide-react": "0.556.0",
     "mermaid": "^11.12.2",
-    "next": "15.1.6",
+    "next": "15.5.7",
     "next-csrf": "^0.2.1",
     "next-intl": "^4.5.8",
     "playwright": "^1.57.0",
@@ -69,6 +69,7 @@
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^5.1.2",
     "@vitest/coverage-v8": "^4.0.15",
+    "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "husky": "^9.1.7",
@@ -78,6 +79,7 @@
     "snyk": "^1.1301.1",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^4.0.15"
+    "vitest": "^4.0.15",
+    "webpack-bundle-analyzer": "^5.1.0"
   }
 }

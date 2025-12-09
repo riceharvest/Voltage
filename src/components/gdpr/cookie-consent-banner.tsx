@@ -30,7 +30,6 @@ export function CookieConsentBanner({
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-background/95 backdrop-blur-sm border-t" role="dialog" aria-labelledby="cookie-preferences-title" aria-describedby="cookie-preferences-description">
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-background/95 backdrop-blur-sm border-t">
       <Card className="max-w-4xl mx-auto p-6">
         <div className="space-y-4">
           <h3 className="text-lg font-semibold">Cookie Preferences</h3>

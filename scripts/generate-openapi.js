@@ -327,11 +327,10 @@ function generateOpenAPISpec(routes) {
       paths[route.path] = {};
     }
 
-    paths[route.path][route.method] = {
+    const operation = {
       summary: route.summary,
       description: route.description,
       parameters: route.parameters,
-      requestBody: route.requestBody,
       responses: route.responses,
       security: [
         {
@@ -339,6 +338,12 @@ function generateOpenAPISpec(routes) {
         }
       ]
     };
+
+    if (route.requestBody) {
+      operation.requestBody = route.requestBody;
+    }
+
+    paths[route.path][route.method] = operation;
 
     // Add CSRF requirement for state-changing operations
     if (['post', 'put', 'delete'].includes(route.method)) {

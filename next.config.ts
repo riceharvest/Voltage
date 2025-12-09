@@ -1,5 +1,6 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const nextConfig: NextConfig = {
   // Build optimizations
@@ -30,6 +31,17 @@ const nextConfig: NextConfig = {
           return assetFilename.endsWith('.js') || assetFilename.endsWith('.css');
         },
       };
+    }
+
+    // Bundle analyzer
+    if (process.env.ANALYZE) {
+      config.plugins.push(
+        new BundleAnalyzerPlugin({
+          analyzerMode: 'static',
+          reportFilename: './analyze/client.html',
+          openAnalyzer: false,
+        })
+      );
     }
 
     return config;
@@ -115,6 +127,7 @@ const nextConfig: NextConfig = {
             value: 'public, max-age=31536000, immutable',
           },
         ],
+      },
       // CSS and JS assets
       {
         source: '/:path*.(css|js)',
@@ -134,7 +147,6 @@ const nextConfig: NextConfig = {
             value: 'public, max-age=3600, s-maxage=3600',
           },
         ],
-      },
       },
     ];
   },
