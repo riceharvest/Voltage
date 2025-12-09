@@ -1,0 +1,22 @@
+{
+  "id": "cola-kick",
+  "name": "Cola Kick",
+  "nameNl": "Cola Kick",
+  "profile": "Classic cola-inspired fizz with lemon-lime brightness, vanilla sweetness, and subtle spice",
+  "profileNl": "Klassieke cola-geïnspireerde bubbel met citroen-limoen helderheid, vanille zoetheid en subtiele kruiden",
+  "ingredients": [
+    {"ingredientId": "lemon-oil", "amount": 2},
+    {"ingredientId": "lime-oil", "amount": 2},
+    {"ingredientId": "vanilla-extract", "amount": 1},
+    {"ingredientId": "methyl-cinnamate", "amount": 0.05}
+  ],
+  "color": {
+    "type": "artificial",
+    "description": "Brown (#8B4513)"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 168,
+    "optional": false
+  }
+}

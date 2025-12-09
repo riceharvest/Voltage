@@ -1,0 +1,30 @@
+{
+  "id": "ultra-white",
+  "name": "Ultra White (Zero Citrus)",
+  "nameNl": "Ultra White (Zero Citrus)",
+  "profile": "Dry, crisp citrus. Best with Zero Base",
+  "profileNl": "Droog, knapperig citrus. Best met Zero Basis",
+  "ingredients": [
+    {
+      "ingredientId": "lemon-oil",
+      "amount": 1.5
+    },
+    {
+      "ingredientId": "lime-oil",
+      "amount": 1.0
+    },
+    {
+      "ingredientId": "grapefruit-extract",
+      "amount": 2
+    }
+  ],
+  "color": {
+    "type": "natural",
+    "description": "Clear (Cloudy emulsion optional, NO TiO2)"
+  },
+  "compatibleBases": ["zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": true
+  }
+}

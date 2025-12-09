@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "title": "DIY Energy Drink Gids - Nederland",
+    "description": "Veilige, EU-conforme gids voor het maken van aangepaste energiedranken thuis"
+  },
+  "navigation": {
+    "home": "Energy Drink Gids",
+    "guide": "Gids",
+    "calculator": "Rekenmachine",
+    "recipes": "Recepten",
+    "flavors": "Smaken",
+    "phases": "Fasen",
+    "safety": "Veiligheid",
+    "skipToMain": "Ga naar hoofdinhoud"
+  },
+  "home": {
+    "title": "Voltage",
+    "subtitle": "De Ultieme DIY {energyDrink} Gids",
+    "energyDrink": "Energy Drink",
+    "description": "Maak EU-conforme, veilige en krachtige energiedranken thuis. Precisie recepten, kostenberekening en veiligheidsverificatie.",
+    "startMixing": "Begin met Mengsel",
+    "documentation": "Documentatie",
+    "warning": {
+      "title": "Dodelijk Gevaar Waarschuwing",
+      "message": "Pure cafeïne is potentieel dodelijk. Precieze meting (0.001g weegschaal) is VERPLICHT. Deze gids voldoet aan EU veiligheidslimieten. Nalatigheid kan ernstig letsel of dood veroorzaken.",
+      "respect": "— RESPECTEER DE CHEMIE —"
+    },
+    "features": {
+      "calculator": {
+        "title": "Slimme Rekenmachine",
+        "description": "Voer je gewenste volume en cafeïnesterkte in. Wij berekenen precieze poederverhoudingen voor perfecte batches elke keer."
+      },
+      "flavors": {
+        "title": "Smaak Alchemie",
+        "description": "Kloon beroemde recepten of bedenk je eigen. Onze bibliotheek zorgt voor chemische veiligheid en smaakstabiliteit."
+      },
+      "guide": {
+        "title": "Meester Gids",
+        "description": "Van ingredienten sourcing tot conserveringstechnieken. Een complete handleiding voor de thuis energy brouwer."
+      }
+    }
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Fout",
+    "retry": "Opnieuw proberen",
+    "cancel": "Annuleren",
+    "confirm": "Bevestigen",
+    "save": "Opslaan",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "back": "Terug",
+    "next": "Volgende",
+    "previous": "Vorige"
+  }
+}

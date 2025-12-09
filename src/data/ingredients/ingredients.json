@@ -1,0 +1,620 @@
+[
+  {
+    "id": "caffeine-anhydrous",
+    "name": "Caffeine Anhydrous",
+    "nameNl": "Cafeïne Anhydrous",
+    "category": "caffeine",
+    "unit": "g",
+    "safety": {
+      "maxDaily": 0.4,
+      "warningThreshold": 0.2,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "sportpoeders",
+      "bulk",
+      "ietsgezond",
+      "buxtrade"
+    ],
+    "supplierProducts": {
+      "sportpoeders": "https://www.sportpoeders.nl/nl/webshop/caffeine-poeder/",
+      "ietsgezond": "https://ietsgezond.nl/en/work-out/1335-caffeine-200g-powder-kopen-5903246221718.html"
+    }
+  },
+  {
+    "id": "taurine",
+    "name": "Taurine Powder",
+    "nameNl": "Taurine Poeder",
+    "category": "amino acid",
+    "unit": "g",
+    "safety": {
+      "maxDaily": 1000,
+      "warningThreshold": 500,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "sportpoeders",
+      "bulk",
+      "bodysupplies"
+    ],
+    "supplierProducts": {
+      "sportpoeders": "https://www.sportpoeders.nl/nl/webshop/taurine-poeder/"
+    }
+  },
+  {
+    "id": "citric-acid",
+    "name": "Citric Acid (Food Grade)",
+    "nameNl": "Citroenzuur (Levensmiddelenkwaliteit)",
+    "category": "acid",
+    "unit": "g",
+    "safety": {
+      "maxDaily": 1000,
+      "warningThreshold": 500,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "laboratorium-discounter",
+      "holland-barrett"
+    ],
+    "supplierProducts": {
+      "laboratorium-discounter": "https://www.veggie4u.nl/citroenzuur-poeder-1-kg"
+    }
+  },
+  {
+    "id": "sodium-citrate",
+    "name": "Sodium Citrate",
+    "nameNl": "Natriumcitraat",
+    "category": "acid",
+    "unit": "g",
+    "safety": {
+      "maxDaily": 1000,
+      "warningThreshold": 500,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "laboratorium-discounter"
+    ],
+    "supplierProducts": {
+      "laboratorium-discounter": "https://www.brouwmarkt.com/natriumcitraat-1kg.html"
+    }
+  },
+  {
+    "id": "sugar",
+    "name": "Sugar",
+    "nameNl": "Suiker",
+    "category": "sweetener",
+    "unit": "g",
+    "safety": {
+      "maxDaily": 10000,
+      "warningThreshold": 5000,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "ah",
+      "jumbo",
+      "lidl"
+    ],
+    "supplierProducts": {
+      "ah": "https://www.ah.nl/producten/product/wi39125/ah-basterdsuiker"
+    }
+  },
+  {
+    "id": "erythritol",
+    "name": "Erythritol",
+    "nameNl": "Erythritol",
+    "category": "sweetener",
+    "unit": "g",
+    "safety": {
+      "maxDaily": 1000,
+      "warningThreshold": 500,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "sweetener-store",
+      "steviala"
+    ],
+    "supplierProducts": {
+      "steviala": "https://www.steviala.nl/collections/poeders/products/erythritol-poeder"
+    }
+  },
+  {
+    "id": "sucralose",
+    "name": "Liquid Sucralose",
+    "nameNl": "Vloeibare Sucralose",
+    "category": "sweetener",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 15,
+      "warningThreshold": 7.5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "sweetener-store"
+    ],
+    "supplierProducts": {
+      "sweetener-store": "https://www.sweetenerstore.nl/sucralose-vloeibaar"
+    }
+  },
+  {
+    "id": "xanthan-gum",
+    "name": "Xanthan Gum",
+    "nameNl": "Xanthaangom",
+    "category": "sweetener",
+    "unit": "g",
+    "safety": {
+      "maxDaily": 10,
+      "warningThreshold": 5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "laboratorium-discounter"
+    ],
+    "supplierProducts": {
+      "laboratorium-discounter": "https://www.veggie4u.nl/xanthaangom-100-gr"
+    }
+  },
+  {
+    "id": "sodium-benzoate",
+    "name": "Sodium Benzoate (E211)",
+    "nameNl": "Natriumbenzoaat (E211)",
+    "category": "preservative",
+    "unit": "g",
+    "safety": {
+      "maxDaily": 5,
+      "warningThreshold": 2.5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "laboratorium-discounter"
+    ],
+    "supplierProducts": {
+      "laboratorium-discounter": "https://www.brouwmarkt.com/natriumbenzoaat-100gr.html"
+    }
+  },
+  {
+    "id": "potassium-sorbate",
+    "name": "Potassium Sorbate (E202)",
+    "nameNl": "Kaliumsorbaat (E202)",
+    "category": "preservative",
+    "unit": "g",
+    "safety": {
+      "maxDaily": 25,
+      "warningThreshold": 12.5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "laboratorium-discounter"
+    ],
+    "supplierProducts": {
+      "laboratorium-discounter": "https://www.brouwmarkt.com/kaliumsorbaat-100gr.html"
+    }
+  },
+  {
+    "id": "ethyl-butyrate",
+    "name": "Ethyl Butyrate",
+    "nameNl": "Ethylbutyraat",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 0.5,
+      "warningThreshold": 0.25,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "agridient",
+      "hekserij",
+      "sigma-aldrich"
+    ],
+    "supplierProducts": {
+      "hekserij": "https://www.aromaweb.nl/aromas/ethylbutyraat",
+      "sigma-aldrich": "https://www.sigmaaldrich.com/NL/en/product/aldrich/e15701"
+    }
+  },
+  {
+    "id": "ethyl-vanillin",
+    "name": "Ethyl Vanillin",
+    "nameNl": "Ethylvanilline",
+    "category": "flavor",
+    "unit": "g",
+    "safety": {
+      "maxDaily": 0.1,
+      "warningThreshold": 0.05,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "brenntag",
+      "hekserij"
+    ],
+    "supplierProducts": {
+      "hekserij": "https://eng.hekserij.nl/shop/fragrance-raw-material/search-by-type/aroma-chemicals/ethyl-vanillin/"
+    }
+  },
+  {
+    "id": "methyl-cinnamate",
+    "name": "Methyl Cinnamate",
+    "nameNl": "Methylcinnamaat",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 0.2,
+      "warningThreshold": 0.1,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "sigma-aldrich",
+      "hekserij"
+    ],
+    "supplierProducts": {
+      "hekserij": "https://www.aromaweb.nl/aromas/methylcinnamaat"
+    }
+  },
+  {
+    "id": "orange-oil",
+    "name": "Orange Oil",
+    "nameNl": "Sinaasappelolie",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 5,
+      "warningThreshold": 2.5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "hekserij"
+    ],
+    "supplierProducts": {
+      "hekserij": "https://www.hekserij.nl/sinaasappelolie-10ml"
+    }
+  },
+  {
+    "id": "lime-oil",
+    "name": "Lime Oil",
+    "nameNl": "Limoenolie",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 5,
+      "warningThreshold": 2.5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "hekserij"
+    ]
+  },
+  {
+    "id": "lemon-oil",
+    "name": "Lemon Oil",
+    "nameNl": "Citroenolie",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 5,
+      "warningThreshold": 2.5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "hekserij"
+    ]
+  },
+  {
+    "id": "mango-extract",
+    "name": "Mango Extract",
+    "nameNl": "Mango-extract",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 10,
+      "warningThreshold": 5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "frutoria",
+      "ubuy"
+    ]
+  },
+  {
+    "id": "pineapple-extract",
+    "name": "Pineapple Extract",
+    "nameNl": "Ananasextract",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 10,
+      "warningThreshold": 5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "baking-flavor-shop"
+    ]
+  },
+  {
+    "id": "blueberry-extract",
+    "name": "Blueberry Extract",
+    "nameNl": "Bosbessenextract",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 12,
+      "warningThreshold": 6,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "frutoria"
+    ]
+  },
+  {
+    "id": "green-apple-extract",
+    "name": "Green Apple Extract",
+    "nameNl": "Groene Appel Extract",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 10,
+      "warningThreshold": 5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "baking-flavor-shop",
+      "iherb-netherlands"
+    ],
+    "supplierProducts": {
+      "iherb-netherlands": "https://nl.iherb.com/pr/zhou-nutrition-organic-daily-greens-green-apple-5-oz-141-9-g/132583"
+    }
+  },
+  {
+    "id": "panax-ginseng",
+    "name": "Panax Ginseng",
+    "nameNl": "Panax Ginseng",
+    "category": "herb",
+    "unit": "g",
+    "safety": {
+      "maxDaily": 2,
+      "warningThreshold": 1,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "holland-barrett"
+    ]
+  },
+  {
+    "id": "vanilla-extract",
+    "name": "Vanilla Extract",
+    "nameNl": "Vanille-extract",
+    "category": "flavor",
+    "unit": "tsp",
+    "safety": {
+      "maxDaily": 5,
+      "warningThreshold": 2.5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "ah"
+    ]
+  },
+  {
+    "id": "grapefruit-extract",
+    "name": "Grapefruit Extract",
+    "nameNl": "Grapefruit Extract",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 5,
+      "warningThreshold": 2.5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "baking-flavor-shop",
+      "mandimart-eu"
+    ],
+    "supplierProducts": {
+      "mandimart-eu": "https://mandimart.eu/en-us/collections/netherlands-9-vat/products/gse-liquid-grapefruit-seed-extract-2oz-by-nutribiotic"
+    }
+  },
+  {
+    "id": "raspberry-extract",
+    "name": "Raspberry Extract (Natural)",
+    "nameNl": "Frambozen Extract (Natuurlijk)",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 20,
+      "warningThreshold": 5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "baking-flavor-shop"
+    ]
+  },
+  {
+    "id": "strawberry-extract",
+    "name": "Strawberry Extract (Natural)",
+    "nameNl": "Aardbeien Extract (Natuurlijk)",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 20,
+      "warningThreshold": 5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "baking-flavor-shop"
+    ]
+  },
+  {
+    "id": "pomegranate-juice-conc",
+    "name": "Pomegranate Juice Concentrate",
+    "nameNl": "Granaatappel Sapconcentraat",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 200,
+      "warningThreshold": 0,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "ah",
+      "jumbo"
+    ]
+  },
+  {
+    "id": "ginger-extract",
+    "name": "Ginger Extract",
+    "nameNl": "Gember Extract",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 10,
+      "warningThreshold": 5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "baking-flavor-shop",
+      "holland-barrett"
+    ]
+  },
+  {
+    "id": "mint-oil",
+    "name": "Peppermint Oil (Food Grade)",
+    "nameNl": "Pepermuntolie (Levensmiddelen)",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 1,
+      "warningThreshold": 0.5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "holland-barrett"
+    ]
+  },
+  {
+    "id": "hibiscus-dried",
+    "name": "Dried Hibiscus Flowers",
+    "nameNl": "Gedroogde Hibiscusbloemen",
+    "category": "flavor",
+    "unit": "g",
+    "safety": {
+      "maxDaily": 50,
+      "warningThreshold": 0,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "buxtrade"
+    ]
+  },
+  {
+    "id": "coconut-extract",
+    "name": "Coconut Extract",
+    "nameNl": "Kokos Extract",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 20,
+      "warningThreshold": 5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "baking-flavor-shop",
+      "aromaworld"
+    ],
+    "supplierProducts": {
+      "aromaworld": "https://www.aromaworld.nl/en/tpa-coconut-extra-14245347.html"
+    }
+  },
+  {
+    "id": "cherry-extract-natural",
+    "name": "Cherry Extract (Natural)",
+    "nameNl": "Kersen Extract (Natuurlijk)",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 20,
+      "warningThreshold": 5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "baking-flavor-shop",
+      "holland-barrett"
+    ],
+    "supplierProducts": {
+      "holland-barrett": "https://www.hollandandbarrett.nl/shop/product/holland-barrett-montmorency-kers-500mg-501-extract-gelijk-aan-25-gram-montmorency-cherry-60-capsules-6100003653"
+    }
+  },
+  {
+    "id": "green-tea-extract",
+    "name": "Green Tea Extract (Liquid)",
+    "nameNl": "Groene Thee Extract (Vloeibaar)",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 10,
+      "warningThreshold": 0,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "holland-barrett"
+    ]
+  },
+  {
+    "id": "titanium-dioxide",
+    "name": "Titanium Dioxide (E171)",
+    "nameNl": "Titaniumdioxide (E171)",
+    "category": "flavor",
+    "unit": "g",
+    "safety": {
+      "maxDaily": 0,
+      "warningThreshold": 0,
+      "euCompliant": false,
+      "banned": true
+    },
+    "suppliers": []
+  },
+  {
+    "id": "watermelon-extract",
+    "name": "Watermelon Aroma",
+    "nameNl": "Watermeloen Aroma",
+    "category": "flavor",
+    "unit": "ml",
+    "safety": {
+      "maxDaily": 5,
+      "warningThreshold": 2.5,
+      "euCompliant": true,
+      "banned": false
+    },
+    "suppliers": [
+      "aromaworld"
+    ]
+  }
+]

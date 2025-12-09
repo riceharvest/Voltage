@@ -1,0 +1,31 @@
+{
+  "id": "blue-voltage",
+  "name": "Blue Voltage (Blue Edition)",
+  "nameNl": "Blue Voltage (Blauwe Editie)",
+  "profile": "Sweet blueberry, mild herbal finish",
+  "profileNl": "Zoete bosbes, milde kruidige afdronk",
+  "ingredients": [
+    {
+      "ingredientId": "blueberry-extract",
+      "amount": 12
+    },
+    {
+      "ingredientId": "ethyl-vanillin",
+      "amount": 0.05
+    },
+    {
+      "ingredientId": "lemon-oil",
+      "amount": 1
+    }
+  ],
+  "color": {
+    "type": "artificial",
+    "eNumber": "E133",
+    "description": "Blue color"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": false
+  }
+}

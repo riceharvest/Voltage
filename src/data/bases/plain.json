@@ -1,0 +1,19 @@
+{
+  "id": "plain",
+  "name": "Plain Sparkling Water",
+  "nameNl": "Platte Bruisende Water",
+  "type": "plain",
+  "yield": {
+    "syrup": 0,
+    "drink": 1000
+  },
+  "ingredients": [],
+  "instructions": [
+    {
+      "step": 1,
+      "description": "Carbonate water using SodaStream or similar device.",
+      "descriptionNl": "Karbonateer water met SodaStream of vergelijkbaar apparaat."
+    }
+  ],
+  "safetyChecks": []
+}

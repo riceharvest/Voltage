@@ -1,0 +1,20 @@
+{
+  "id": "ginger-lime-spark",
+  "name": "Ginger Lime Spark",
+  "nameNl": "Gember Lime Vonk",
+  "profile": "Sparking ginger heat balanced with tangy lime freshness",
+  "profileNl": "Vonken gember hitte gebalanceerd met pittige lime frisheid",
+  "ingredients": [
+    {"ingredientId": "ginger-extract", "amount": 10},
+    {"ingredientId": "lime-oil", "amount": 10}
+  ],
+  "color": {
+    "type": "natural",
+    "description": "zesty lime green with ginger warmth"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": true
+  }
+}

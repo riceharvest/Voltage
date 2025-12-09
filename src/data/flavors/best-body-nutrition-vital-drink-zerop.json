@@ -1,0 +1,23 @@
+{
+  "id": "best-body-nutrition-vital-drink-zerop",
+  "name": "Best Body Nutrition Vital Drink Zerop",
+  "nameNl": "Best Body Nutrition Vital Drink Zerop",
+  "profile": "Sugar-free energy concentrate with fruit flavors, similar to Monster Zero",
+  "profileNl": "Suikervrije energiedrank concentraat met fruit smaken, vergelijkbaar met Monster Zero",
+  "ingredients": [],
+  "color": {
+    "type": "artificial",
+    "eNumber": "E150a",
+    "description": "Caramel color"
+  },
+  "compatibleBases": ["plain"],
+  "aging": {
+    "recommended": 0,
+    "optional": true
+  },
+  "dilutionRatio": "1:80",
+  "packaging": "1L bottle",
+  "priceRange": "€3.99-€16.90",
+  "netherlandsAvailability": "Available on bol.com, vitalabo.com, trufit.eu, GoSupps.com with international shipping",
+  "caffeineContent": "60mg per serving"
+}

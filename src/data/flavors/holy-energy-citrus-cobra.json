@@ -1,0 +1,31 @@
+{
+  "id": "holy-energy-citrus-cobra",
+  "name": "HOLY Energy (Citrus Cobra)",
+  "nameNl": "HOLY Energy (Citrus Cobra)",
+  "profile": "Sugar-free powder, citrus flavor, no taurine",
+  "profileNl": "Suikervrije poeder, citrussmaak, zonder taurine",
+  "ingredients": [
+    {
+      "ingredientId": "caffeine-anhydrous",
+      "amount": 0.32
+    },
+    {
+      "ingredientId": "green-tea-extract",
+      "amount": 0.1
+    }
+  ],
+  "color": {
+    "type": "natural",
+    "description": "Natural fruit color"
+  },
+  "compatibleBases": ["plain"],
+  "aging": {
+    "recommended": 0,
+    "optional": false
+  },
+  "dilutionRatio": "7g : 500ml",
+  "packaging": "Tub (350g)",
+  "priceRange": "€39.99 per tub (50 servings)",
+  "netherlandsAvailability": "Available online (weareholy.com) with EU shipping",
+  "caffeineContent": "64mg/100ml prepared"
+}

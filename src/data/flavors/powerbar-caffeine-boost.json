@@ -1,0 +1,27 @@
+{
+  "id": "powerbar-caffeine-boost",
+  "name": "Powerbar Caffeine Boost",
+  "nameNl": "Powerbar Caffeine Boost",
+  "profile": "Liquid caffeine concentrate ampoule, neutral or berry taste",
+  "profileNl": "Vloeibaar cafeïneconcentraat ampul, neutrale of bessensmaak",
+  "ingredients": [
+    {
+      "ingredientId": "caffeine-anhydrous",
+      "amount": 2.0
+    }
+  ],
+  "color": {
+    "type": "natural",
+    "description": "Clear/Reddish"
+  },
+  "compatibleBases": ["plain", "classic", "zero"],
+  "aging": {
+    "recommended": 0,
+    "optional": false
+  },
+  "dilutionRatio": "1 ampoule (25ml) : custom",
+  "packaging": "25ml ampoule",
+  "priceRange": "€1.50 - €2.00 per ampoule",
+  "netherlandsAvailability": "Sports nutrition shops (Duursport, Body & Fit)",
+  "caffeineContent": "2000mg per ampoule"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "tropical-berry-wave",
+  "name": "Tropical Berry Wave",
+  "nameNl": "Tropische Bes Golf",
+  "profile": "A wave of tropical sweetness meeting juicy berries",
+  "profileNl": "Een golf van tropische zoetheid ontmoet sappige bessen",
+  "ingredients": [
+    {"ingredientId": "mango-extract", "amount": 8},
+    {"ingredientId": "pineapple-extract", "amount": 8},
+    {"ingredientId": "blueberry-extract", "amount": 6},
+    {"ingredientId": "raspberry-extract", "amount": 6}
+  ],
+  "color": {
+    "type": "natural",
+    "description": "vibrant tropical purple"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": true
+  }
+}

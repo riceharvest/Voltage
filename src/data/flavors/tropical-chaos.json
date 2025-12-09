@@ -1,0 +1,35 @@
+{
+  "id": "tropical-chaos",
+  "name": "Tropical Chaos (Mango Loco)",
+  "nameNl": "Tropical Chaos (Mango Loco)",
+  "profile": "Juicy mango, citrus punch",
+  "profileNl": "Sappige mango, citrusstoot",
+  "ingredients": [
+    {
+      "ingredientId": "mango-extract",
+      "amount": 10
+    },
+    {
+      "ingredientId": "orange-oil",
+      "amount": 1.5
+    },
+    {
+      "ingredientId": "pineapple-extract",
+      "amount": 3
+    },
+    {
+      "ingredientId": "citric-acid",
+      "amount": 5
+    }
+  ],
+  "color": {
+    "type": "artificial",
+    "eNumber": "E100+E102",
+    "description": "Orange + Yellow"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": false
+  }
+}

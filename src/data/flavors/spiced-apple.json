@@ -1,0 +1,20 @@
+{
+  "id": "spiced-apple",
+  "name": "Spiced Apple",
+  "nameNl": "Gekruide Appel",
+  "profile": "Crisp green apple with warming ginger spice",
+  "profileNl": "Frisse groene appel met verwarmende gemberkruiden",
+  "ingredients": [
+    {"ingredientId": "green-apple-extract", "amount": 12},
+    {"ingredientId": "ginger-extract", "amount": 5}
+  ],
+  "color": {
+    "type": "natural",
+    "description": "Pale Green/Yellow (Natural)"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 48,
+    "optional": false
+  }
+}

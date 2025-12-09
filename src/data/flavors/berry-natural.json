@@ -1,0 +1,21 @@
+{
+  "id": "berry-natural",
+  "name": "Berry Blast Natural",
+  "nameNl": "Bessen Explosie Natuurlijk",
+  "profile": "Rich mixed berry blend using pure extracts",
+  "profileNl": "Rijke gemengde bessen mix met pure extracten",
+  "ingredients": [
+    {"ingredientId": "strawberry-extract", "amount": 8},
+    {"ingredientId": "raspberry-extract", "amount": 8},
+    {"ingredientId": "blueberry-extract", "amount": 5}
+  ],
+  "color": {
+    "type": "natural",
+    "description": "Deep Red/Purple (Natural)"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 48,
+    "optional": false
+  }
+}

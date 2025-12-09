@@ -1,0 +1,21 @@
+{
+  "id": "watermelon-wave",
+  "name": "Watermelon Wave",
+  "nameNl": "Watermeloen Golf",
+  "profile": "Crisp, refreshing watermelon with lime zest and green apple freshness",
+  "profileNl": "Knisperende, verfrissende watermeloen met limoenschil en groene appel frisheid",
+  "ingredients": [
+    {"ingredientId": "lime-oil", "amount": 3},
+    {"ingredientId": "green-apple-extract", "amount": 8},
+    {"ingredientId": "ethyl-butyrate", "amount": 0.4}
+  ],
+  "color": {
+    "type": "artificial",
+    "description": "Red (#FF6B6B)"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 168,
+    "optional": false
+  }
+}

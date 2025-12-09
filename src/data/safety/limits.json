@@ -1,0 +1,14 @@
+{
+  "caffeine": {
+    "maxDailyMg": 400,
+    "maxPerServingMg": 80,
+    "warningThresholdMg": 200
+  },
+  "preservatives": {
+    "sodiumBenzoateMaxMg": 5000,
+    "potassiumSorbateMaxMg": 25000
+  },
+  "bannedIngredients": ["titanium-dioxide"],
+  "ageRestriction": 18,
+  "precisionScaleRequired": true
+}

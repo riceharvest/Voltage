@@ -1,0 +1,25 @@
+# This file defines the code owners for this repository
+# When a pull request is opened, the users listed here will be automatically
+# requested for review
+
+# Global owners - required for all changes
+* @your-username
+
+# Security-related files
+src/lib/csrf.ts @your-username
+src/lib/gdpr.ts @your-username
+src/app/api/auth/ @your-username
+src/components/auth/ @your-username
+middleware.ts @your-username
+
+# Testing files
+tests/ @your-username
+src/lib/__tests__/ @your-username
+
+# CI/CD and configuration
+.github/ @your-username
+.husky/ @your-username
+*.config.* @your-username
+
+# Data and content
+src/data/ @your-username

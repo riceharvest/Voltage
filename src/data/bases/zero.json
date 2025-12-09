@@ -1,0 +1,103 @@
+{
+  "id": "zero",
+  "name": "Zero Ultra Base",
+  "nameNl": "Zero Ultra Basis",
+  "type": "zero",
+  "yield": {
+    "syrup": 1000,
+    "drink": 5000
+  },
+  "ingredients": [
+    {
+      "ingredientId": "caffeine-anhydrous",
+      "amount": 1.6
+    },
+    {
+      "ingredientId": "taurine",
+      "amount": 20
+    },
+    {
+      "ingredientId": "citric-acid",
+      "amount": 25
+    },
+    {
+      "ingredientId": "sodium-citrate",
+      "amount": 5
+    },
+    {
+      "ingredientId": "erythritol",
+      "amount": 150
+    },
+    {
+      "ingredientId": "sucralose",
+      "amount": 15
+    },
+    {
+      "ingredientId": "xanthan-gum",
+      "amount": 0.5
+    },
+    {
+      "ingredientId": "sodium-benzoate",
+      "amount": 0.5
+    },
+    {
+      "ingredientId": "potassium-sorbate",
+      "amount": 0.5
+    }
+  ],
+  "instructions": [
+    {
+      "step": 1,
+      "description": "Dissolve preservatives in 20ml warm water separately.",
+      "descriptionNl": "Los conserveringsmiddelen op in 20ml warm water apart.",
+      "warning": "Handle preservatives carefully.",
+      "warningNl": "Behandel conserveringsmiddelen voorzichtig."
+    },
+    {
+      "step": 2,
+      "description": "Heat 200ml water to ~60°C (do not boil).",
+      "descriptionNl": "Verwarm 200ml water tot ~60°C (niet koken)."
+    },
+    {
+      "step": 3,
+      "description": "Add caffeine, taurine, citric acid, and sodium citrate to hot water. Stir until clear.",
+      "descriptionNl": "Voeg cafeïne, taurine, citroenzuur en natriumcitraat toe aan heet water. Roer tot helder.",
+      "warning": "Use precise scale for caffeine. This is critical for safety.",
+      "warningNl": "Gebruik nauwkeurige weegschaal voor cafeïne. Dit is cruciaal voor veiligheid."
+    },
+    {
+      "step": 4,
+      "description": "Add dissolved preservatives.",
+      "descriptionNl": "Voeg opgeloste conserveringsmiddelen toe."
+    },
+    {
+      "step": 5,
+      "description": "Dissolve erythritol in remaining water with gentle heat.",
+      "descriptionNl": "Los erythritol op in resterend water met zachte warmte."
+    },
+    {
+      "step": 6,
+      "description": "Add sucralose and xanthan gum. Stir well.",
+      "descriptionNl": "Voeg sucralose en xanthaangom toe. Goed roeren."
+    },
+    {
+      "step": 7,
+      "description": "Combine active water with syrup. Cool to <30°C.",
+      "descriptionNl": "Combineer actief water met siroop. Koel af tot <30°C."
+    }
+  ],
+  "safetyChecks": [
+    {
+      "type": "dosage",
+      "message": "Caffeine dosage must not exceed 1.6g per liter.",
+      "messageNl": "Cafeïnedosering mag niet meer dan 1.6g per liter bedragen.",
+      "severity": "error"
+    },
+    {
+      "type": "compliance",
+      "message": "All ingredients are EU compliant.",
+      "messageNl": "Alle ingrediënten zijn EU-conform.",
+      "severity": "warning"
+    }
+  ]
+}

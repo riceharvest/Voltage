@@ -1,0 +1,20 @@
+{
+  "id": "hibiscus-hype",
+  "name": "Hibiscus Hype",
+  "nameNl": "Hibiscus Hype",
+  "profile": "Floral and tart hibiscus with a zest of lime",
+  "profileNl": "Bloemige en zure hibiscus met een vleugje limoen",
+  "ingredients": [
+    {"ingredientId": "hibiscus-dried", "amount": 40},
+    {"ingredientId": "lime-oil", "amount": 1.5}
+  ],
+  "color": {
+    "type": "natural",
+    "description": "Vibrant Red/Magenta (Natural)"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": false
+  }
+}

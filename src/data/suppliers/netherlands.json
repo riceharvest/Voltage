@@ -1,0 +1,140 @@
+[
+  {
+    "id": "ietsgezond",
+    "name": "ietsGezond",
+    "url": "https://www.ietsgezond.nl",
+    "location": "Netherlands"
+  },
+  {
+    "id": "buxtrade",
+    "name": "Buxtrade",
+    "url": "https://www.buxtrade.com",
+    "location": "Netherlands"
+  },
+  {
+    "id": "bulk",
+    "name": "Bulk.com",
+    "url": "https://www.bulk.com",
+    "location": "Netherlands"
+  },
+  {
+    "id": "bodysupplies",
+    "name": "BodySupplies",
+    "url": "https://www.bodysupplies.nl",
+    "location": "Netherlands"
+  },
+  {
+    "id": "laboratorium-discounter",
+    "name": "Laboratorium Discounter",
+    "url": "https://www.laboratorium-discounter.nl",
+    "location": "Netherlands"
+  },
+  {
+    "id": "holland-barrett",
+    "name": "Holland & Barrett",
+    "url": "https://www.hollandandbarrett.nl",
+    "location": "Netherlands"
+  },
+  {
+    "id": "sweetener-store",
+    "name": "Sweetener Store",
+    "url": "https://www.sweetenerstore.nl",
+    "location": "Netherlands"
+  },
+  {
+    "id": "steviala",
+    "name": "Steviala",
+    "url": "https://www.steviala.nl",
+    "location": "Netherlands"
+  },
+  {
+    "id": "agridient",
+    "name": "Agridient",
+    "url": "https://www.agridient.com",
+    "location": "Netherlands"
+  },
+  {
+    "id": "hekserij",
+    "name": "Hekserij",
+    "url": "https://www.hekserij.nl",
+    "location": "Netherlands"
+  },
+  {
+    "id": "brenntag",
+    "name": "Brenntag",
+    "url": "https://www.brenntag.com",
+    "location": "Netherlands"
+  },
+  {
+    "id": "sigma-aldrich",
+    "name": "Sigma-Aldrich",
+    "url": "https://www.sigmaaldrich.com",
+    "location": "Netherlands"
+  },
+  {
+    "id": "frutoria",
+    "name": "Frutoria",
+    "url": "https://www.frutoria.com",
+    "location": "Netherlands"
+  },
+  {
+    "id": "ubuy",
+    "name": "Ubuy",
+    "url": "https://www.ubuy.nl",
+    "location": "Netherlands"
+  },
+  {
+    "id": "baking-flavor-shop",
+    "name": "Baking/Flavor Shop",
+    "url": "https://www.bakingflavorshop.nl",
+    "location": "Netherlands"
+  },
+  {
+    "id": "ah",
+    "name": "AH (Albert Heijn)",
+    "url": "https://www.ah.nl",
+    "location": "Netherlands"
+  },
+  {
+    "id": "jumbo",
+    "name": "Jumbo",
+    "url": "https://www.jumbo.com",
+    "location": "Netherlands"
+  },
+  {
+    "id": "lidl",
+    "name": "Lidl",
+    "url": "https://www.lidl.nl",
+    "location": "Netherlands"
+  },
+  {
+    "id": "aromaworld",
+    "name": "Aroma World",
+    "url": "https://www.aromaworld.nl",
+    "location": "Netherlands"
+  },
+  {
+    "id": "sportpoeders",
+    "name": "Sportpoeders.nl",
+    "url": "https://www.sportpoeders.nl",
+    "location": "Netherlands"
+  },
+  {
+    "id": "denotenshop",
+    "name": "De Notenshop",
+    "url": "https://www.denotenshop.nl",
+    "location": "Netherlands"
+  },
+  {
+    "id": "mandimart-eu",
+    "name": "MandiMart-EU",
+    "url": "https://mandimart.eu",
+    "location": "Netherlands"
+  },
+  {
+    "id": "iherb-netherlands",
+    "name": "iHerb Netherlands",
+    "url": "https://nl.iherb.com",
+    "location": "Netherlands"
+  }
+]

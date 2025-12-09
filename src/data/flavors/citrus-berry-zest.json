@@ -1,0 +1,22 @@
+{
+  "id": "citrus-berry-zest",
+  "name": "Citrus Berry Zest",
+  "nameNl": "Citrus Bes Pit",
+  "profile": "Zesty citrus combined with sweet berries for an energetic kick",
+  "profileNl": "Pittige citrus gecombineerd met zoete bessen voor een energieke kick",
+  "ingredients": [
+    {"ingredientId": "lemon-oil", "amount": 8},
+    {"ingredientId": "lime-oil", "amount": 8},
+    {"ingredientId": "strawberry-extract", "amount": 6},
+    {"ingredientId": "raspberry-extract", "amount": 6}
+  ],
+  "color": {
+    "type": "natural",
+    "description": "bright citrus red with berry accents"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": true
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "citrus-sunburst",
+  "name": "Citrus Sunburst",
+  "nameNl": "Citrus Zonnestraal",
+  "profile": "Bright, complex citrus blend with grapefruit notes",
+  "profileNl": "Heldere, complexe citrus mix met grapefruit tonen",
+  "ingredients": [
+    {"ingredientId": "orange-oil", "amount": 1.5},
+    {"ingredientId": "lemon-oil", "amount": 1.5},
+    {"ingredientId": "grapefruit-extract", "amount": 5}
+  ],
+  "color": {
+    "type": "natural",
+    "description": "Clear/Pale Yellow (Natural)"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": true
+  }
+}

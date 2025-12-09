@@ -1,0 +1,43 @@
+{
+  "id": "green-beast",
+  "name": "Green Beast (Monster Original)",
+  "nameNl": "Green Beast (Monster Origineel)",
+  "profile": "Sweet, heavy, green apple & pineapple notes",
+  "profileNl": "Zoet, zwaar, groene appel & ananas tonen",
+  "ingredients": [
+    {
+      "ingredientId": "green-apple-extract",
+      "amount": 5
+    },
+    {
+      "ingredientId": "pineapple-extract",
+      "amount": 5
+    },
+    {
+      "ingredientId": "ethyl-butyrate",
+      "amount": 0.15
+    },
+    {
+      "ingredientId": "lime-oil",
+      "amount": 1.0
+    },
+    {
+      "ingredientId": "vanilla-extract",
+      "amount": 1
+    },
+    {
+      "ingredientId": "panax-ginseng",
+      "amount": 2
+    }
+  ],
+  "color": {
+    "type": "artificial",
+    "eNumber": "E100+E132",
+    "description": "Yellow + Blue for green"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": false
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "coconut-charge",
+  "name": "Coconut Charge",
+  "nameNl": "Kokos Oplading",
+  "profile": "Tropical coconut and pineapple blend (Pina Colada style)",
+  "profileNl": "Tropische kokos en ananas mix (Pina Colada stijl)",
+  "ingredients": [
+    {"ingredientId": "coconut-extract", "amount": 10},
+    {"ingredientId": "pineapple-extract", "amount": 10}
+  ],
+  "color": {
+    "type": "natural",
+    "description": "Cloudy White/Clear (Natural)"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": true
+  }
+}

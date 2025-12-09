@@ -1,0 +1,32 @@
+{
+  "id": "extra-joss-active",
+  "name": "Extra Joss Active",
+  "nameNl": "Extra Joss Active",
+  "profile": "Effervescent energy powder, tropical pineapple flavor",
+  "profileNl": "Bruisend energiepoeder, tropische ananassmaak",
+  "ingredients": [
+    {
+      "ingredientId": "caffeine-anhydrous",
+      "amount": 0.50
+    },
+    {
+      "ingredientId": "taurine",
+      "amount": 10.0
+    }
+  ],
+  "color": {
+    "type": "artificial",
+    "eNumber": "E102",
+    "description": "Yellow"
+  },
+  "compatibleBases": ["plain"],
+  "aging": {
+    "recommended": 0,
+    "optional": false
+  },
+  "dilutionRatio": "1 sachet (4g) : 200ml",
+  "packaging": "Box of 6 sachets",
+  "priceRange": "€2.50 per box",
+  "netherlandsAvailability": "Available at Tokos, Albert Heijn XL, online",
+  "caffeineContent": "250mg/100ml prepared"
+}

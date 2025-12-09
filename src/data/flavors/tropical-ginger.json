@@ -1,0 +1,21 @@
+{
+  "id": "tropical-ginger",
+  "name": "Tropical Ginger Zinger",
+  "nameNl": "Tropische Gember Zinger",
+  "profile": "Spicy ginger kick with sweet mango and pineapple",
+  "profileNl": "Pittige gember kick met zoete mango en ananas",
+  "ingredients": [
+    {"ingredientId": "mango-extract", "amount": 10},
+    {"ingredientId": "pineapple-extract", "amount": 5},
+    {"ingredientId": "ginger-extract", "amount": 3}
+  ],
+  "color": {
+    "type": "natural",
+    "description": "Golden Yellow (Natural)"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": true
+  }
+}

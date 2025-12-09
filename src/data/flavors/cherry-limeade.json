@@ -1,0 +1,20 @@
+{
+  "id": "cherry-limeade",
+  "name": "Cherry Limeade",
+  "nameNl": "Kersen Limoen",
+  "profile": "Sweet cherry balanced with tart lime",
+  "profileNl": "Zoete kers in balans met zure limoen",
+  "ingredients": [
+    {"ingredientId": "cherry-extract-natural", "amount": 12},
+    {"ingredientId": "lime-oil", "amount": 2}
+  ],
+  "color": {
+    "type": "natural",
+    "description": "Red (Natural)"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": true
+  }
+}

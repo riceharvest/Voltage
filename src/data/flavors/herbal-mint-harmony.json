@@ -1,0 +1,21 @@
+{
+  "id": "herbal-mint-harmony",
+  "name": "Herbal Mint Harmony",
+  "nameNl": "Kruidige Munt Harmonie",
+  "profile": "A harmonious blend of herbal notes and cool mint freshness",
+  "profileNl": "Een harmonieuze mix van kruidige noten en koele munt frisheid",
+  "ingredients": [
+    {"ingredientId": "mint-oil", "amount": 10},
+    {"ingredientId": "green-tea-extract", "amount": 7},
+    {"ingredientId": "vanilla-extract", "amount": 3}
+  ],
+  "color": {
+    "type": "natural",
+    "description": "soft green herbal tone"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": true
+  }
+}

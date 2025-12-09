@@ -1,0 +1,35 @@
+{
+  "id": "red-bull",
+  "name": "Red Bull (Classic Tutti Frutti)",
+  "nameNl": "Red Bull (Klassiek Tutti Frutti)",
+  "profile": "Crisp, tart, candy-like",
+  "profileNl": "Knisperend, zuur, snoepachtig",
+  "ingredients": [
+    {
+      "ingredientId": "ethyl-butyrate",
+      "amount": 0.25
+    },
+    {
+      "ingredientId": "ethyl-vanillin",
+      "amount": 0.05
+    },
+    {
+      "ingredientId": "methyl-cinnamate",
+      "amount": 0.05
+    },
+    {
+      "ingredientId": "orange-oil",
+      "amount": 1.0
+    }
+  ],
+  "color": {
+    "type": "artificial",
+    "eNumber": "E150a",
+    "description": "Caramel color"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": false
+  }
+}

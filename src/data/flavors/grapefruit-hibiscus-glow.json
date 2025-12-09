@@ -1,0 +1,20 @@
+{
+  "id": "grapefruit-hibiscus-glow",
+  "name": "Grapefruit Hibiscus Glow",
+  "nameNl": "Grapefruit Hibiscus Glans",
+  "profile": "Glowing grapefruit brightness enhanced by floral hibiscus",
+  "profileNl": "Gloeiende grapefruit helderheid versterkt door bloemige hibiscus",
+  "ingredients": [
+    {"ingredientId": "grapefruit-extract", "amount": 10},
+    {"ingredientId": "hibiscus-dried", "amount": 8}
+  ],
+  "color": {
+    "type": "natural",
+    "description": "radiant grapefruit pink"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": true
+  }
+}

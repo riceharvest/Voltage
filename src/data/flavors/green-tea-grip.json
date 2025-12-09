@@ -1,0 +1,20 @@
+{
+  "id": "green-tea-grip",
+  "name": "Green Tea Grip",
+  "nameNl": "Groene Thee Grip",
+  "profile": "Earthy green tea with a lemon twist (Arnold Palmer style)",
+  "profileNl": "Aardse groene thee met een citroen twist (Arnold Palmer stijl)",
+  "ingredients": [
+    {"ingredientId": "green-tea-extract", "amount": 10},
+    {"ingredientId": "lemon-oil", "amount": 1}
+  ],
+  "color": {
+    "type": "natural",
+    "description": "Pale Green/Brown (Natural)"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 12,
+    "optional": true
+  }
+}

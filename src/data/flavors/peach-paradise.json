@@ -1,0 +1,21 @@
+{
+  "id": "peach-paradise",
+  "name": "Peach Paradise",
+  "nameNl": "Perzik Paradijs",
+  "profile": "Smooth, juicy peach with tropical mango undertones and vanilla creaminess",
+  "profileNl": "Zachte, sappige perzik met tropische mango ondertonen en vanille romigheid",
+  "ingredients": [
+    {"ingredientId": "ethyl-butyrate", "amount": 0.6},
+    {"ingredientId": "vanilla-extract", "amount": 1.5},
+    {"ingredientId": "mango-extract", "amount": 5}
+  ],
+  "color": {
+    "type": "artificial",
+    "description": "Peach (#FFDAB9)"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 168,
+    "optional": false
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "cherry-blast",
+  "name": "Cherry Blast",
+  "nameNl": "Kersen Knal",
+  "profile": "Sweet and tart cherry-like taste with vanilla smoothness and subtle orange sweetness",
+  "profileNl": "Zoete en zure kers-achtige smaak met vanille zachtheid en subtiele sinaasappel zoetheid",
+  "ingredients": [
+    {"ingredientId": "ethyl-butyrate", "amount": 0.5},
+    {"ingredientId": "vanilla-extract", "amount": 2},
+    {"ingredientId": "orange-oil", "amount": 1}
+  ],
+  "color": {
+    "type": "artificial",
+    "description": "Red (#FF0000)"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 168,
+    "optional": false
+  }
+}

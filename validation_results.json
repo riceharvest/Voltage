@@ -1,0 +1,130 @@
+[
+  {
+    "url": "https://www.sportpoeders.nl/nl/webshop/caffeine-poeder/",
+    "status": "passed",
+    "hasImages": true,
+    "hasPrice": true
+  },
+  {
+    "url": "https://ietsgezond.nl/en/work-out/1335-caffeine-200g-powder-kopen-5903246221718.html",
+    "status": "passed",
+    "hasImages": true,
+    "hasPrice": true
+  },
+  {
+    "url": "https://www.sportpoeders.nl/nl/webshop/taurine-poeder/",
+    "status": "passed",
+    "hasImages": true,
+    "hasPrice": true
+  },
+  {
+    "url": "https://www.veggie4u.nl/citroenzuur-poeder-1-kg",
+    "status": "passed",
+    "hasImages": true,
+    "hasPrice": true
+  },
+  {
+    "url": "https://www.brouwmarkt.com/natriumcitraat-1kg.html",
+    "status": "failed",
+    "error": "page.$$: Execution context was destroyed, most likely because of a navigation",
+    "hasImages": false,
+    "hasPrice": false
+  },
+  {
+    "url": "https://www.ah.nl/producten/product/wi39125/ah-basterdsuiker",
+    "status": "passed",
+    "hasImages": false,
+    "hasPrice": false
+  },
+  {
+    "url": "https://www.steviala.nl/collections/poeders/products/erythritol-poeder",
+    "status": "failed",
+    "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.steviala.nl/collections/poeders/products/erythritol-poeder\nCall log:\n\u001b[2m  - navigating to \"https://www.steviala.nl/collections/poeders/products/erythritol-poeder\", waiting until \"domcontentloaded\"\u001b[22m\n",
+    "hasImages": false,
+    "hasPrice": false
+  },
+  {
+    "url": "https://www.sweetenerstore.nl/sucralose-vloeibaar",
+    "status": "failed",
+    "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.sweetenerstore.nl/sucralose-vloeibaar\nCall log:\n\u001b[2m  - navigating to \"https://www.sweetenerstore.nl/sucralose-vloeibaar\", waiting until \"domcontentloaded\"\u001b[22m\n",
+    "hasImages": false,
+    "hasPrice": false
+  },
+  {
+    "url": "https://www.veggie4u.nl/xanthaangom-100-gr",
+    "status": "passed",
+    "hasImages": true,
+    "hasPrice": true
+  },
+  {
+    "url": "https://www.brouwmarkt.com/natriumbenzoaat-100gr.html",
+    "status": "failed",
+    "error": "page.$$: Execution context was destroyed, most likely because of a navigation",
+    "hasImages": false,
+    "hasPrice": false
+  },
+  {
+    "url": "https://www.brouwmarkt.com/kaliumsorbaat-100gr.html",
+    "status": "failed",
+    "error": "page.$$: Execution context was destroyed, most likely because of a navigation",
+    "hasImages": false,
+    "hasPrice": false
+  },
+  {
+    "url": "https://www.aromaweb.nl/aromas/ethylbutyraat",
+    "status": "failed",
+    "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.aromaweb.nl/aromas/ethylbutyraat\nCall log:\n\u001b[2m  - navigating to \"https://www.aromaweb.nl/aromas/ethylbutyraat\", waiting until \"domcontentloaded\"\u001b[22m\n",
+    "hasImages": false,
+    "hasPrice": false
+  },
+  {
+    "url": "https://www.sigmaaldrich.com/NL/en/product/aldrich/e15701",
+    "status": "failed",
+    "error": "page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.sigmaaldrich.com/NL/en/product/aldrich/e15701\nCall log:\n\u001b[2m  - navigating to \"https://www.sigmaaldrich.com/NL/en/product/aldrich/e15701\", waiting until \"domcontentloaded\"\u001b[22m\n",
+    "hasImages": false,
+    "hasPrice": false
+  },
+  {
+    "url": "https://eng.hekserij.nl/shop/fragrance-raw-material/search-by-type/aroma-chemicals/ethyl-vanillin/",
+    "status": "passed",
+    "hasImages": true,
+    "hasPrice": true
+  },
+  {
+    "url": "https://www.aromaweb.nl/aromas/methylcinnamaat",
+    "status": "failed",
+    "error": "page.goto: net::ERR_NAME_NOT_RESOLVED at https://www.aromaweb.nl/aromas/methylcinnamaat\nCall log:\n\u001b[2m  - navigating to \"https://www.aromaweb.nl/aromas/methylcinnamaat\", waiting until \"domcontentloaded\"\u001b[22m\n",
+    "hasImages": false,
+    "hasPrice": false
+  },
+  {
+    "url": "https://www.hekserij.nl/sinaasappelolie-10ml",
+    "status": "passed",
+    "hasImages": true,
+    "hasPrice": false
+  },
+  {
+    "url": "https://nl.iherb.com/pr/zhou-nutrition-organic-daily-greens-green-apple-5-oz-141-9-g/132583",
+    "status": "passed",
+    "hasImages": false,
+    "hasPrice": false
+  },
+  {
+    "url": "https://mandimart.eu/en-us/collections/netherlands-9-vat/products/gse-liquid-grapefruit-seed-extract-2oz-by-nutribiotic",
+    "status": "passed",
+    "hasImages": true,
+    "hasPrice": true
+  },
+  {
+    "url": "https://www.aromaworld.nl/en/tpa-coconut-extra-14245347.html",
+    "status": "passed",
+    "hasImages": true,
+    "hasPrice": true
+  },
+  {
+    "url": "https://www.hollandandbarrett.nl/shop/product/holland-barrett-montmorency-kers-500mg-501-extract-gelijk-aan-25-gram-montmorency-cherry-60-capsules-6100003653",
+    "status": "passed",
+    "hasImages": true,
+    "hasPrice": true
+  }
+]

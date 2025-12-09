@@ -1,0 +1,21 @@
+{
+  "id": "grape-rush",
+  "name": "Grape Rush",
+  "nameNl": "Druiven Drukte",
+  "profile": "Juicy, bold grape flavor with vanilla notes and lime acidity",
+  "profileNl": "Sappige, krachtige druivensmaak met vanille tonen en limoen zuurgraad",
+  "ingredients": [
+    {"ingredientId": "ethyl-butyrate", "amount": 0.8},
+    {"ingredientId": "ethyl-vanillin", "amount": 0.1},
+    {"ingredientId": "lime-oil", "amount": 2}
+  ],
+  "color": {
+    "type": "artificial",
+    "description": "Purple (#6A0DAD)"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 168,
+    "optional": false
+  }
+}

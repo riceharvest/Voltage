@@ -1,0 +1,20 @@
+{
+  "id": "watermelon-mint",
+  "name": "Watermelon Mint",
+  "nameNl": "Watermeloen Munt",
+  "profile": "Refreshing watermelon with a cooling mint finish",
+  "profileNl": "Verfrissende watermeloen met een verkoelende munt afdronk",
+  "ingredients": [
+    {"ingredientId": "watermelon-extract", "amount": 12},
+    {"ingredientId": "mint-oil", "amount": 0.5}
+  ],
+  "color": {
+    "type": "natural",
+    "description": "Pink (from extract) or Clear"
+  },
+  "compatibleBases": ["classic", "zero"],
+  "aging": {
+    "recommended": 24,
+    "optional": false
+  }
+}

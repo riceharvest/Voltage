@@ -1,0 +1,23 @@
+{
+  "id": "sodastream-energy",
+  "name": "SodaStream Energy",
+  "nameNl": "SodaStream Energie",
+  "profile": "Classic energy drink flavor, high caffeine, B-vitamins",
+  "profileNl": "Klassieke energiedrank smaak, hoog cafeïnegehalte, B-vitaminen",
+  "ingredients": [],
+  "color": {
+    "type": "artificial",
+    "eNumber": "E150d",
+    "description": "Caramel color"
+  },
+  "compatibleBases": ["plain"],
+  "aging": {
+    "recommended": 0,
+    "optional": false
+  },
+  "dilutionRatio": "1:19",
+  "packaging": "440ml bottle",
+  "priceRange": "€5.00-€7.00",
+  "netherlandsAvailability": "Widely available (Bol.com, Coolblue, MediaMarkt, Supermarkets)",
+  "caffeineContent": "15mg/100ml prepared"
+}

@@ -1,65 +1,105 @@
-import Image from "next/image";
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { AlertTriangle, Calculator, FlaskConical, BookOpen, Zap } from 'lucide-react'
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="flex flex-col items-center justify-center space-y-20 py-10">
+      
+      {/* Hero Section */}
+      <div className="relative w-full max-w-4xl text-center flex flex-col items-center space-y-6">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 blur-[120px] rounded-full -z-10 animate-pulse-slow"></div>
+        
+        <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-primary animate-glow drop-shadow-[0_0_15px_rgba(204,255,0,0.5)]">
+          Voltage
+        </h1>
+        <p className="text-2xl md:text-3xl font-light text-muted-foreground tracking-wide max-w-2xl px-4">
+          The Ultimate DIY <span className="text-primary font-semibold text-glow">Energy Drink</span> Guide
+        </p>
+        
+        <p className="max-w-xl text-lg text-white/60">
+          Create EU-compliant, safe, and powerful energy drinks at home. 
+          Precision recipes, cost scaling, and safety verification.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-6 pt-8">
+          <Link href="/calculator">
+            <Button size="lg" className="h-16 px-10 text-xl shadow-[0_0_20px_rgba(204,255,0,0.4)] hover:shadow-[0_0_40px_rgba(204,255,0,0.6)]">
+              <Calculator className="mr-3 h-6 w-6" />
+              Start Mixing
+            </Button>
+          </Link>
+          <Link href="/guide">
+            <Button variant="outline" size="lg" className="h-16 px-10 text-xl border-white/20 hover:border-white/50 bg-white/5 backdrop-blur-sm">
+              <BookOpen className="mr-3 h-6 w-6" />
+              Documentation
+            </Button>
+          </Link>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </div>
+
+      {/* Safety Warning - Styled for Cyberpunk */}
+      <div className="w-full max-w-4xl px-4">
+        <div className="relative group overflow-hidden rounded-xl border border-dotted border-destructive/50 bg-destructive/5 p-1 transition-all hover:bg-destructive/10 hover:border-destructive">
+          <div className="flex flex-col md:flex-row items-center gap-6 p-6">
+             <div className="flex items-center justify-center w-16 h-16 rounded-full bg-destructive/20 text-destructive shrink-0 animate-pulse">
+               <AlertTriangle className="w-8 h-8" />
+             </div>
+             <div className="flex-1 text-center md:text-left">
+               <h3 className="text-2xl font-bold text-destructive mb-2 uppercase tracking-widest">Lethal Hazard Warning</h3>
+               <p className="text-destructive-foreground/80 font-mono text-sm leading-relaxed">
+                 Pure caffeine is potentially lethal. Precise measurement (0.001g scale) is MANDATORY. 
+                 This guide complies with EU safety limits. Negligence can cause severe injury or death.
+                 <span className="block mt-2 font-bold text-white">— RESPECT THE CHEMISTRY —</span>
+               </p>
+             </div>
+          </div>
         </div>
-      </main>
+      </div>
+
+      {/* Features Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl px-4">
+        <Card className="group border-primary/20 hover:border-primary/50 transition-all duration-500">
+          <CardHeader>
+            <Zap className="w-12 h-12 text-primary mb-4 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(204,255,0,0.5)]" aria-hidden="true" />
+            <Zap className="w-12 h-12 text-primary mb-4 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(204,255,0,0.5)]" />
+            <CardTitle className="text-2xl">Smart Calculator</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">
+              Input your desired volume and caffeine strength. We calculate precise powder ratios for perfect batches every time.
+            </p>
+          </CardContent>
+        </Card>
+
+              <FlaskConical className="w-12 h-12 text-cyan-400 mb-4 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" aria-hidden="true" />
+        <Card className="group border-cyan-500/20 hover:border-cyan-500/50 transition-all duration-500">
+          <CardHeader>
+             <FlaskConical className="w-12 h-12 text-cyan-400 mb-4 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
+            <CardTitle className="text-2xl text-cyan-50">Flavor Alchemy</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">
+              Clone famous recipes or invent your own. Our library ensures chemical safety and flavor stability.
+            </p>
+          </CardContent>
+              <BookOpen className="w-12 h-12 text-fuchsia-400 mb-4 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(232,121,249,0.5)]" aria-hidden="true" />
+        </Card>
+
+        <Card className="group border-fuchsia-500/20 hover:border-fuchsia-500/50 transition-all duration-500">
+          <CardHeader>
+             <BookOpen className="w-12 h-12 text-fuchsia-400 mb-4 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(232,121,249,0.5)]" />
+            <CardTitle className="text-2xl text-fuchsia-50">Master Guide</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">
+              From sourcing ingredients to preservation techniques. A complete manual for the home energy brewer.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
     </div>
-  );
+  )
 }
