@@ -21,6 +21,7 @@ const Checkbox = React.forwardRef<
       )}
       ref={ref}
       onChange={handleChange}
+      aria-checked={props.checked}
       {...props}
     />
   )

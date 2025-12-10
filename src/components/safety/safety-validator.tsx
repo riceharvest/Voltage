@@ -104,6 +104,7 @@ export function SafetyValidator({ caffeineMg, ingredients, onValidationChange }:
                     size="sm"
                     className="justify-start text-yellow-600 hover:text-yellow-700"
                     onClick={() => showWarning(warning)}
+                    aria-label={`View details for: ${warning}`}
                   >
                     <AlertTriangle className="h-4 w-4 mr-2" />
                     {warning}

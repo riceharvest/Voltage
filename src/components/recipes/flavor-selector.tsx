@@ -67,7 +67,7 @@ export function FlavorSelector({ onFlavorSelect, selectedBase }: FlavorSelectorP
               <TooltipTrigger asChild>
                 <div>
                   <Select value={selectedFlavor} onValueChange={handleSelect}>
-                    <SelectTrigger>
+                    <SelectTrigger aria-label="Select a flavor">
                       <SelectValue placeholder="Choose a flavor" />
                     </SelectTrigger>
                     <SelectContent>

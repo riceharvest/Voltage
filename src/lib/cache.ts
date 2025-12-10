@@ -1,25 +1,55 @@
-import { createClient, RedisClientType } from 'redis';
 import { logger } from './logger';
+
+// In-memory fallback cache
+const memoryCache = new Map<string, { value: any; expiry?: number }>();
+
+// Redis client type for when available
+type RedisClientType = {
+  get: (key: string) => Promise<string | null>;
+  set: (key: string, value: string, mode?: string, duration?: number) => Promise<'OK' | null>;
+  setEx: (key: string, seconds: number, value: string) => Promise<'OK' | null>;
+  del: (key: string) => Promise<number>;
+  keys: (pattern: string) => Promise<string[]>;
+  exists: (key: string) => Promise<number>;
+  flushAll: () => Promise<'OK' | null>;
+  disconnect: () => Promise<void>;
+  on: (event: string, callback: (...args: any[]) => void) => void;
+  connect: () => Promise<void>;
+};
 
 class CacheManager {
   private client: RedisClientType | null = null;
   private isConnected = false;
+  private useMemoryFallback = false;
 
   async connect(): Promise<void> {
     if (this.isConnected && this.client) return;
 
+    // Skip Redis connection in test environments or when explicitly disabled
+    if (process.env.NODE_ENV === 'test' || 
+        process.env.DISABLE_REDIS === 'true' || 
+        !process.env.REDIS_URL ||
+        process.env.CI === 'true') {
+      logger.info('Using in-memory cache fallback (test/development mode)');
+      this.useMemoryFallback = true;
+      return;
+    }
+
     try {
+      // Dynamic import to avoid module resolution errors
+      const { createClient } = await import('redis');
       this.client = createClient({
         url: process.env.REDIS_URL || 'redis://localhost:6379',
         socket: {
-          connectTimeout: 60000,
+          connectTimeout: 5000,
           lazyConnect: true,
         },
-      });
+      }) as RedisClientType;
 
-      this.client.on('error', (err) => {
-        logger.error('Redis Client Error', err);
+      this.client.on('error', (err: any) => {
+        logger.warn('Redis Client Error - falling back to memory cache', err.message);
         this.isConnected = false;
+        this.useMemoryFallback = true;
       });
 
       this.client.on('connect', () => {
@@ -28,21 +58,40 @@ class CacheManager {
       });
 
       this.client.on('disconnect', () => {
-        logger.warn('Redis Client Disconnected');
+        logger.warn('Redis Client Disconnected - using memory cache');
         this.isConnected = false;
+        this.useMemoryFallback = true;
       });
 
       await this.client.connect();
-    } catch (error) {
-      logger.error('Failed to connect to Redis', error);
-      // Fallback to in-memory cache for development
-      this.client = null;
+    } catch (error: any) {
+      logger.warn('Failed to connect to Redis - using memory cache', error?.message || error);
+      this.useMemoryFallback = true;
     }
   }
 
-  async get<T>(key: string): Promise<T | null> {
-    if (!this.client || !this.isConnected) {
+  private getFromMemory<T>(key: string): T | null {
+    const item = memoryCache.get(key);
+    if (!item) return null;
+    
+    // Check expiry
+    if (item.expiry && Date.now() > item.expiry) {
+      memoryCache.delete(key);
       return null;
+    }
+    
+    return item.value;
+  }
+
+  private setToMemory(key: string, value: any, ttlSeconds?: number): void {
+    const expiry = ttlSeconds ? Date.now() + (ttlSeconds * 1000) : undefined;
+    memoryCache.set(key, { value, expiry });
+  }
+
+  async get<T>(key: string): Promise<T | null> {
+    // Always use memory cache in test environments or when Redis fails
+    if (this.useMemoryFallback || !this.client || !this.isConnected) {
+      return this.getFromMemory<T>(key);
     }
 
     try {
@@ -50,17 +99,20 @@ class CacheManager {
       return value ? JSON.parse(value) : null;
     } catch (error) {
       logger.error(`Cache get error for key ${key}`, error);
-      return null;
+      return this.getFromMemory<T>(key); // Fallback to memory
     }
   }
 
   async set(key: string, value: any, ttlSeconds?: number): Promise<void> {
-    if (!this.client || !this.isConnected) {
+    const serializedValue = JSON.stringify(value);
+
+    // Always use memory cache in test environments or when Redis fails
+    if (this.useMemoryFallback || !this.client || !this.isConnected) {
+      this.setToMemory(key, value, ttlSeconds);
       return;
     }
 
     try {
-      const serializedValue = JSON.stringify(value);
       if (ttlSeconds) {
         await this.client.setEx(key, ttlSeconds, serializedValue);
       } else {
@@ -68,11 +120,15 @@ class CacheManager {
       }
     } catch (error) {
       logger.error(`Cache set error for key ${key}`, error);
+      // Fallback to memory cache
+      this.setToMemory(key, value, ttlSeconds);
     }
   }
 
   async del(key: string): Promise<void> {
-    if (!this.client || !this.isConnected) {
+    // Always use memory cache in test environments or when Redis fails
+    if (this.useMemoryFallback || !this.client || !this.isConnected) {
+      memoryCache.delete(key);
       return;
     }
 
@@ -80,11 +136,20 @@ class CacheManager {
       await this.client.del(key);
     } catch (error) {
       logger.error(`Cache delete error for key ${key}`, error);
+      // Fallback to memory cache
+      memoryCache.delete(key);
     }
   }
 
   async delPattern(pattern: string): Promise<void> {
-    if (!this.client || !this.isConnected) {
+    // Always use memory cache in test environments or when Redis fails
+    if (this.useMemoryFallback || !this.client || !this.isConnected) {
+      const regex = new RegExp(pattern.replace('*', '.*'));
+      for (const key of memoryCache.keys()) {
+        if (regex.test(key)) {
+          memoryCache.delete(key);
+        }
+      }
       return;
     }
 
@@ -95,12 +160,29 @@ class CacheManager {
       }
     } catch (error) {
       logger.error(`Cache delete pattern error for ${pattern}`, error);
+      // Fallback to memory cache
+      const regex = new RegExp(pattern.replace('*', '.*'));
+      for (const key of memoryCache.keys()) {
+        if (regex.test(key)) {
+          memoryCache.delete(key);
+        }
+      }
     }
   }
 
   async exists(key: string): Promise<boolean> {
-    if (!this.client || !this.isConnected) {
-      return false;
+    // Always use memory cache in test environments or when Redis fails
+    if (this.useMemoryFallback || !this.client || !this.isConnected) {
+      const item = memoryCache.get(key);
+      if (!item) return false;
+      
+      // Check expiry
+      if (item.expiry && Date.now() > item.expiry) {
+        memoryCache.delete(key);
+        return false;
+      }
+      
+      return true;
     }
 
     try {
@@ -108,7 +190,8 @@ class CacheManager {
       return result === 1;
     } catch (error) {
       logger.error(`Cache exists error for key ${key}`, error);
-      return false;
+      // Fallback to memory cache
+      return this.exists(key); // This will use the memory fallback
     }
   }
 
@@ -129,7 +212,9 @@ class CacheManager {
   }
 
   async invalidateAll(): Promise<void> {
-    if (!this.client || !this.isConnected) {
+    // Always use memory cache in test environments or when Redis fails
+    if (this.useMemoryFallback || !this.client || !this.isConnected) {
+      memoryCache.clear();
       return;
     }
 
@@ -137,6 +222,8 @@ class CacheManager {
       await this.client.flushAll();
     } catch (error) {
       logger.error('Cache flush all error', error);
+      // Fallback to memory cache
+      memoryCache.clear();
     }
   }
 }
@@ -144,7 +231,7 @@ class CacheManager {
 // Singleton instance
 export const cache = new CacheManager();
 
-// Initialize cache connection
+// Initialize cache connection (only on server side)
 if (typeof window === 'undefined') { // Only on server side
   cache.connect().catch((error) => {
     logger.error('Failed to initialize cache connection', error);

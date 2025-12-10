@@ -1,0 +1,6 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="22.68184">
+<testsuite name="accessibility.spec.ts" timestamp="2025-12-10T08:28:42.113Z" hostname="chromium" tests="1" failures="0" skipped="0" time="8.585" errors="0">
+<testcase name="Accessibility Tests › Guide page should pass accessibility checks" classname="accessibility.spec.ts" time="8.585">
+</testcase>
+</testsuite>
+</testsuites>

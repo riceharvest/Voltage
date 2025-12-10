@@ -71,7 +71,7 @@ export function AgeVerificationModal({ isOpen, onVerified }: AgeVerificationModa
             This website contains information about energy drinks. Due to EU regulations,
             you must be at least 18 years old to access this content.
           </p>
-          <form onSubmit={handleSubmit} className="space-y-4" aria-labelledby="age-verification-title">
+          <form onSubmit={handleSubmit} className="space-y-4" aria-labelledby="age-verification-title" aria-label="Age verification form">
             <div className="space-y-2">
               <Label htmlFor="birthYear">Enter your birth year</Label>
               <Input
@@ -84,6 +84,7 @@ export function AgeVerificationModal({ isOpen, onVerified }: AgeVerificationModa
                 max={maxBirthYear}
                 required
                 aria-describedby={error ? "birthYear-error" : undefined}
+                aria-invalid={!!error}
               />
             </div>
             {error && (

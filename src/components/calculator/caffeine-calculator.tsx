@@ -52,7 +52,7 @@ export function CaffeineCalculator({ onCaffeineChange, baseId }: CaffeineCalcula
             Caffeine Calculator
             <Tooltip>
               <TooltipTrigger asChild>
-                <HelpCircle className="w-4 h-4 text-muted-foreground cursor-help" />
+                <HelpCircle className="w-4 h-4 text-muted-foreground cursor-help" aria-label="More information" />
               </TooltipTrigger>
               <TooltipContent>
                 <p>Calculate the exact amount of caffeine syrup needed for your desired energy level.</p>
@@ -66,7 +66,7 @@ export function CaffeineCalculator({ onCaffeineChange, baseId }: CaffeineCalcula
               Desired Caffeine (mg)
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <HelpCircle className="w-3 h-3 text-muted-foreground cursor-help" />
+                  <HelpCircle className="w-3 h-3 text-muted-foreground cursor-help" aria-label="Caffeine information" />
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Enter the total caffeine content you want in your drink (recommended: 50-150mg).</p>

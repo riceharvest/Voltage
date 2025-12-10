@@ -85,9 +85,16 @@ export function Header() {
             size="icon"
             className="md:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                setIsMenuOpen(!isMenuOpen)
+              }
+            }}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
             aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-haspopup="true"
+            tabIndex={0}
           >
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
@@ -101,23 +108,23 @@ export function Header() {
             aria-label="Mobile navigation"
           >
             <div className="flex flex-col space-y-2">
-              <Link href="/guide" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start" aria-label={t('guide')}>{t('guide')}</Button>
+              <Link href="/guide" onClick={() => setIsMenuOpen(false)} className="w-full">
+                <Button variant="ghost" className="w-full justify-start" aria-label={t('guide')} tabIndex={isMenuOpen ? 0 : -1}>{t('guide')}</Button>
               </Link>
-              <Link href="/calculator" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start" aria-label={t('calculator')}>{t('calculator')}</Button>
+              <Link href="/calculator" onClick={() => setIsMenuOpen(false)} className="w-full">
+                <Button variant="ghost" className="w-full justify-start" aria-label={t('calculator')} tabIndex={isMenuOpen ? 0 : -1}>{t('calculator')}</Button>
               </Link>
-              <Link href="/recipes" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start" aria-label={t('recipes')}>{t('recipes')}</Button>
+              <Link href="/recipes" onClick={() => setIsMenuOpen(false)} className="w-full">
+                <Button variant="ghost" className="w-full justify-start" aria-label={t('recipes')} tabIndex={isMenuOpen ? 0 : -1}>{t('recipes')}</Button>
               </Link>
-              <Link href="/flavors" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start" aria-label={t('flavors')}>{t('flavors')}</Button>
+              <Link href="/flavors" onClick={() => setIsMenuOpen(false)} className="w-full">
+                <Button variant="ghost" className="w-full justify-start" aria-label={t('flavors')} tabIndex={isMenuOpen ? 0 : -1}>{t('flavors')}</Button>
               </Link>
-              <Link href="/phases" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start" aria-label={t('phases')}>{t('phases')}</Button>
+              <Link href="/phases" onClick={() => setIsMenuOpen(false)} className="w-full">
+                <Button variant="ghost" className="w-full justify-start" aria-label={t('phases')} tabIndex={isMenuOpen ? 0 : -1}>{t('phases')}</Button>
               </Link>
-              <Link href="/safety" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start" aria-label={t('safety')}>{t('safety')}</Button>
+              <Link href="/safety" onClick={() => setIsMenuOpen(false)} className="w-full">
+                <Button variant="ghost" className="w-full justify-start" aria-label={t('safety')} tabIndex={isMenuOpen ? 0 : -1}>{t('safety')}</Button>
               </Link>
 
               {/* Mobile Language Switcher */}

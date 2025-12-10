@@ -55,32 +55,38 @@ export function CookieConsentBanner({
             </p>
 
             <div className="flex items-center space-x-2">
-              <Checkbox
-                id="analytics"
-                checked={preferences.analytics}
-                onCheckedChange={(checked) =>
-                  setPreferences(prev => ({ ...prev, analytics: checked as boolean }))
-                }
-              />
-              <label htmlFor="analytics" className="text-sm font-medium">
-                Analytics Cookies
-              </label>
+              <div className="flex items-center space-x-2" role="checkbox" aria-checked={preferences.analytics}>
+                <Checkbox
+                  id="analytics"
+                  checked={preferences.analytics}
+                  onCheckedChange={(checked) =>
+                    setPreferences(prev => ({ ...prev, analytics: checked as boolean }))
+                  }
+                  aria-labelledby="analytics-label"
+                />
+                <label id="analytics-label" htmlFor="analytics" className="text-sm font-medium">
+                  Analytics Cookies
+                </label>
+              </div>
             </div>
             <p className="text-xs text-muted-foreground ml-6">
               Help us understand how visitors interact with our website.
             </p>
 
             <div className="flex items-center space-x-2">
-              <Checkbox
-                id="marketing"
-                checked={preferences.marketing}
-                onCheckedChange={(checked) =>
-                  setPreferences(prev => ({ ...prev, marketing: checked as boolean }))
-                }
-              />
-              <label htmlFor="marketing" className="text-sm font-medium">
-                Marketing Cookies
-              </label>
+              <div className="flex items-center space-x-2" role="checkbox" aria-checked={preferences.marketing}>
+                <Checkbox
+                  id="marketing"
+                  checked={preferences.marketing}
+                  onCheckedChange={(checked) =>
+                    setPreferences(prev => ({ ...prev, marketing: checked as boolean }))
+                  }
+                  aria-labelledby="marketing-label"
+                />
+                <label id="marketing-label" htmlFor="marketing" className="text-sm font-medium">
+                  Marketing Cookies
+                </label>
+              </div>
             </div>
             <p className="text-xs text-muted-foreground ml-6">
               Used to deliver personalized advertisements and track campaign effectiveness.

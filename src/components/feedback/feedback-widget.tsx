@@ -111,6 +111,7 @@ export function FeedbackWidget({ page = 'unknown', triggerClassName }: FeedbackW
                     type="button"
                     onClick={() => setRating(star)}
                     className="focus:outline-none"
+                    aria-label={`Rate ${star} ${star === 1 ? 'star' : 'stars'}`}
                   >
                     <Star
                       className={`w-6 h-6 ${
@@ -131,6 +132,7 @@ export function FeedbackWidget({ page = 'unknown', triggerClassName }: FeedbackW
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                aria-label="Feedback category"
               >
                 <option value="">Select a category</option>
                 <option value="bug">Bug Report</option>
