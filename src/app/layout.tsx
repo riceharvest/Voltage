@@ -5,13 +5,13 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import ErrorBoundary from "@/components/error-boundary";
 import { getConfig } from "@/lib/config";
-import { Analytics } from '@vercel/analytics/react';
+import { PrivacyAwareAnalytics } from "@/components/analytics/privacy-aware-analytics";
 import { AgeVerificationProvider } from "@/components/auth/age-verification-provider";
 import { GDPRProvider } from "@/components/gdpr/gdpr-provider";
 import { WebVitalsTracker } from "@/components/performance/web-vitals-tracker";
 
 // Validate environment configuration on startup
-const config = getConfig();
+getConfig();
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -63,10 +63,9 @@ export default function RootLayout({
             </main>
             <Footer />
           </AgeVerificationProvider>
-        <Analytics />
+        <PrivacyAwareAnalytics />
         <WebVitalsTracker />
         </GDPRProvider>
-        <Analytics />
       </body>
     </html>
   );

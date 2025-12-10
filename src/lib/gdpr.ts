@@ -174,3 +174,49 @@ export function anonymizeIP(ip: string): string {
   }
   return ip;
 }
+
+/**
+ * Validate consent cookie integrity using HMAC
+ */
+export function validateCookieIntegrity(cookies: Record<string, string>): boolean {
+  const consentCookie = cookies['gdpr-consent'];
+  const signatureCookie = cookies['gdpr-consent-signature'];
+  
+  if (!consentCookie || !signatureCookie) {
+    return false;
+  }
+
+  try {
+    // Create HMAC signature for the consent data
+    const expectedSignature = crypto
+      .createHmac('sha256', ENCRYPTION_KEY)
+      .update(consentCookie)
+      .digest('hex');
+    
+    // Compare signatures
+    return expectedSignature === signatureCookie;
+  } catch (error) {
+    console.error('Error validating cookie integrity:', error);
+    return false;
+  }
+}
+
+/**
+ * Get consent status for analytics tracking
+ */
+export function getConsentStatus(): { analytics: boolean } {
+  if (typeof window === 'undefined') {
+    return { analytics: false };
+  }
+
+  const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+    const [key, value] = cookie.trim().split('=');
+    acc[key] = value;
+    return acc;
+  }, {} as Record<string, string>);
+
+  const consentData = getConsentData(cookies);
+  return {
+    analytics: consentData?.analytics === true
+  };
+}

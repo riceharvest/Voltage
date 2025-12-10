@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { isUserInEU, hasConsent } from '@/lib/gdpr';
+import { isUserInEU, hasConsent, validateCookieIntegrity } from '@/lib/gdpr';
 import { cache, cacheKeys, CACHE_TTL } from '@/lib/cache';
 
 export async function GET(request: NextRequest) {
@@ -20,11 +20,21 @@ export async function GET(request: NextRequest) {
     // Compute GDPR status
     const isEU = await isUserInEU(request);
     const cookies = Object.fromEntries(request.cookies);
+    
+    // Validate cookie integrity for security
+    const cookieIntegrityValid = validateCookieIntegrity(cookies);
+    
     const result = {
       isEU,
-      hasConsent: hasConsent(cookies),
-      consentRequired: isEU && !hasConsent(cookies)
+      hasConsent: hasConsent(cookies) && cookieIntegrityValid,
+      consentRequired: isEU && (!hasConsent(cookies) || !cookieIntegrityValid),
+      cookieIntegrityValid
     };
+    
+    // Log integrity validation failures
+    if (!cookieIntegrityValid) {
+      console.warn('Cookie integrity validation failed for IP:', ip);
+    }
 
     // Cache the result (short TTL since GDPR status can change)
     await cache.set(cacheKey, result, CACHE_TTL.SHORT);
@@ -36,7 +46,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       isEU: true,
       hasConsent: false,
-      consentRequired: true
+      consentRequired: true,
+      cookieIntegrityValid: false
     });
   }
 }
