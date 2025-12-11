@@ -1,0 +1,1416 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Energy Drink App API",
+    "version": "2.0.0",
+    "description": "Comprehensive API for the Energy Drink Calculator, Recipe Management, and Analytics Platform. Features include recipe management, A/B testing, affiliate tracking, performance monitoring, GDPR compliance, and advanced analytics.",
+    "contact": {
+      "name": "API Support Team",
+      "email": "api-support@energydrink.app",
+      "url": "https://docs.energydrink.app"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "termsOfService": "https://energydrink.app/terms"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    },
+    {
+      "url": "https://staging.energydrink.app",
+      "description": "Staging environment"
+    },
+    {
+      "url": "https://api.energydrink.app",
+      "description": "Production environment"
+    }
+  ],
+  "security": [
+    {
+      "cookieAuth": []
+    },
+    {
+      "csrfAuth": []
+    }
+  ],
+  "paths": {
+    "/auth/verify-age": {
+      "post": {
+        "summary": "Verify user's age for accessing the application",
+        "description": "Validates user's birth year and sets age verification cookie. Required for accessing age-restricted content and features.",
+        "operationId": "verifyAge",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["birthYear"],
+                "properties": {
+                  "birthYear": {
+                    "type": "integer",
+                    "minimum": 1900,
+                    "maximum": 2010,
+                    "example": 1990,
+                    "description": "User's birth year for age verification"
+                  }
+                }
+              },
+              "examples": {
+                "valid_age": {
+                  "summary": "Valid age verification",
+                  "value": {
+                    "birthYear": 1990
+                  }
+                },
+                "underage": {
+                  "summary": "Underage user attempt",
+                  "value": {
+                    "birthYear": 2010
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Age verified successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "age": {
+                      "type": "integer",
+                      "example": 34
+                    },
+                    "verificationDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-01-15T10:30:00.000Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid birth year provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": "Invalid birth year. Must be between 1900 and 2010"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Age verification failed or invalid CSRF token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": "You must be at least 18 years old"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "csrfAuth": []
+          }
+        ],
+        "x-rate-limit": "10 requests per minute",
+        "x-caching": "No cache - always verify fresh data"
+      }
+    },
+    "/auth/check-verification": {
+      "get": {
+        "summary": "Check current user's age verification status",
+        "description": "Returns whether the current user has been verified for age and provides verification details.",
+        "operationId": "checkVerification",
+        "tags": ["Authentication"],
+        "responses": {
+          "200": {
+            "description": "Verification status retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "verified": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "age": {
+                      "type": "integer",
+                      "example": 34,
+                      "description": "User's calculated age"
+                    },
+                    "verificationDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-01-15T10:30:00.000Z"
+                    },
+                    "reason": {
+                      "type": "string",
+                      "enum": ["data_expired", "age_invalid", "not_verified"],
+                      "description": "Reason for unverified status"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Not verified or data expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": "User not verified or verification data expired"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "x-rate-limit": "100 requests per minute",
+        "x-caching": "Cache for 5 minutes"
+      }
+    },
+    "/csrf-token": {
+      "get": {
+        "summary": "Generate CSRF token for form submissions",
+        "description": "Generates a new CSRF token that must be included in the X-CSRF-Token header for all state-changing operations.",
+        "operationId": "generateCSRFToken",
+        "tags": ["Security"],
+        "responses": {
+          "200": {
+            "description": "CSRF token generated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "csrfToken": {
+                      "type": "string",
+                      "example": "abc123def456ghi789...",
+                      "description": "CSRF token for use in X-CSRF-Token header"
+                    },
+                    "expiresAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Token expiration time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "x-rate-limit": "50 requests per minute",
+        "x-caching": "No cache - generate fresh token"
+      }
+    },
+    "/flavors": {
+      "get": {
+        "summary": "Get all energy drink flavors",
+        "description": "Retrieves a list of all available energy drink flavors with their recipes, ingredients, and safety information.",
+        "operationId": "getFlavors",
+        "tags": ["Core Data"],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            },
+            "description": "Maximum number of flavors to return"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            },
+            "description": "Number of flavors to skip"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["citrus", "berry", "tropical", "cola", "original"]
+            },
+            "description": "Filter by flavor category"
+          },
+          {
+            "name": "caffeineRange",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$",
+              "example": "50-150"
+            },
+            "description": "Filter by caffeine content range (mg), format: min-max"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of flavors retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FlavorRecipe"
+                      }
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 25
+                    },
+                    "pagination": {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "x-rate-limit": "1000 requests per minute",
+        "x-caching": "Cache for 1 hour with stale-while-revalidate"
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Application health check",
+        "description": "Provides comprehensive health status of the application including uptime, environment, and system metrics.",
+        "operationId": "healthCheck",
+        "tags": ["System"],
+        "responses": {
+          "200": {
+            "description": "Application is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthStatus"
+                },
+                "examples": {
+                  "healthy": {
+                    "summary": "Application is healthy",
+                    "value": {
+                      "status": "ok",
+                      "timestamp": "2024-01-15T14:30:00.000Z",
+                      "uptime": 86400.5,
+                      "environment": "production"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Application is unhealthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthStatus"
+                },
+                "examples": {
+                  "unhealthy": {
+                    "summary": "Application health check failed",
+                    "value": {
+                      "status": "error",
+                      "timestamp": "2024-01-15T14:30:00.000Z",
+                      "uptime": 86400.5,
+                      "environment": "production",
+                      "error": "Database connection failed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-rate-limit": "10000 requests per minute",
+        "x-caching": "Cache for 1 minute"
+      }
+    },
+    "/gdpr/status": {
+      "get": {
+        "summary": "Check GDPR compliance status",
+        "description": "Determines if GDPR regulations apply to the current user and their consent status.",
+        "operationId": "getGDPRStatus",
+        "tags": ["GDPR Compliance"],
+        "responses": {
+          "200": {
+            "description": "GDPR status retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "isEU": {
+                      "type": "boolean",
+                      "example": true,
+                      "description": "Whether the user is in the EU"
+                    },
+                    "hasConsent": {
+                      "type": "boolean",
+                      "example": false,
+                      "description": "Whether consent has been given"
+                    },
+                    "consentRequired": {
+                      "type": "boolean",
+                      "example": true,
+                      "description": "Whether consent is required"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "x-rate-limit": "1000 requests per minute",
+        "x-caching": "Cache for 5 minutes based on IP"
+      }
+    },
+    "/gdpr/data": {
+      "get": {
+        "summary": "Get user data (GDPR access request)",
+        "description": "Provides all user data stored by the application as required by GDPR Article 15 (Right of Access).",
+        "operationId": "getUserData",
+        "tags": ["GDPR Compliance"],
+        "responses": {
+          "200": {
+            "description": "User data retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "ageVerified": {
+                          "type": "boolean"
+                        },
+                        "verificationTimestamp": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "dataRetentionDays": {
+                          "type": "integer",
+                          "example": 30
+                        },
+                        "dataPurposes": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "example": [
+                            "Age verification for legal compliance",
+                            "Preventing access to inappropriate content"
+                          ]
+                        },
+                        "dataRecipients": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "example": ["This website only"]
+                        },
+                        "legalBasis": {
+                          "type": "string",
+                          "example": "Legal obligation (age verification requirement)"
+                        }
+                      }
+                    },
+                    "rights": {
+                      "$ref": "#/components/schemas/GDPRRights"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No user data found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "x-rate-limit": "100 requests per minute",
+        "x-caching": "No cache - always provide fresh data"
+      },
+      "delete": {
+        "summary": "Delete user data (GDPR right to erasure)",
+        "description": "Permanently deletes all user data as required by GDPR Article 17 (Right to Erasure).",
+        "operationId": "deleteUserData",
+        "tags": ["GDPR Compliance"],
+        "responses": {
+          "200": {
+            "description": "User data deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "All user data has been deleted"
+                    },
+                    "deletedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "csrfAuth": []
+          }
+        ],
+        "x-rate-limit": "10 requests per minute",
+        "x-caching": "No cache - always process deletion requests"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "age-verified",
+        "description": "Cookie-based authentication for age verification"
+      },
+      "csrfAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-CSRF-Token",
+        "description": "CSRF token for state-changing operations"
+      }
+    },
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Human-readable error message"
+          },
+          "code": {
+            "type": "string",
+            "description": "Machine-readable error code"
+          },
+          "details": {
+            "type": "object",
+            "description": "Additional error details"
+          }
+        },
+        "required": ["error"]
+      },
+      "ValidationError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Validation failed"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Pagination": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer"
+          },
+          "offset": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          },
+          "hasMore": {
+            "type": "boolean"
+          }
+        }
+      },
+      "HealthStatus": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["ok", "error", "degraded"],
+            "example": "ok"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "uptime": {
+            "type": "number",
+            "description": "Server uptime in seconds"
+          },
+          "environment": {
+            "type": "string",
+            "enum": ["development", "staging", "production"]
+          },
+          "version": {
+            "type": "string",
+            "description": "Application version"
+          },
+          "error": {
+            "type": "string",
+            "description": "Error message if status is not ok"
+          }
+        },
+        "required": ["status", "timestamp", "uptime", "environment"]
+      },
+      "FlavorRecipe": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "cola-kick"
+          },
+          "name": {
+            "type": "string",
+            "example": "Cola Kick"
+          },
+          "nameNl": {
+            "type": "string",
+            "example": "Cola Kick"
+          },
+          "profile": {
+            "type": "string",
+            "example": "Classic cola flavor with smooth finish"
+          },
+          "profileNl": {
+            "type": "string",
+            "example": "Klassieke cola smaak met een soepele afwerking"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "ingredientId": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "color": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["natural", "artificial"]
+              },
+              "eNumber": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          },
+          "compatibleBases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "aging": {
+            "type": "object",
+            "properties": {
+              "recommended": {
+                "type": "number"
+              },
+              "optional": {
+                "type": "boolean"
+              }
+            }
+          },
+          "caffeineContent": {
+            "type": "string",
+            "description": "mg per serving for premade concentrates"
+          },
+          "affiliateLink": {
+            "type": "string",
+            "description": "Optional affiliate link for purchase"
+          }
+        },
+        "required": ["id", "name", "profile", "ingredients", "compatibleBases"]
+      },
+      "Ingredient": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "caffeine"
+          },
+          "name": {
+            "type": "string",
+            "example": "Caffeine"
+          },
+          "nameNl": {
+            "type": "string",
+            "example": "Cafeïne"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["caffeine", "sweetener", "acid", "preservative", "flavor", "amino acid", "herb"]
+          },
+          "unit": {
+            "type": "string",
+            "enum": ["g", "ml", "mg", "tsp"]
+          },
+          "safety": {
+            "type": "object",
+            "properties": {
+              "maxDaily": {
+                "type": "number"
+              },
+              "warningThreshold": {
+                "type": "number"
+              },
+              "euCompliant": {
+                "type": "boolean"
+              },
+              "banned": {
+                "type": "boolean"
+              }
+            }
+          },
+          "suppliers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "supplierProducts": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "supplierUrls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["id", "name", "category", "unit", "safety", "suppliers"]
+      },
+      "Supplier": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "bulk-supplements"
+          },
+          "name": {
+            "type": "string",
+            "example": "Bulk Supplements"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "location": {
+            "type": "string",
+            "example": "Netherlands"
+          }
+        },
+        "required": ["id", "name", "url", "location"]
+      },
+      "ABTest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "calc-interface-v1"
+          },
+          "name": {
+            "type": "string",
+            "example": "New Calculator Interface"
+          },
+          "description": {
+            "type": "string",
+            "example": "Test new calculator UI design"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["draft", "running", "paused", "completed", "archived"]
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "weight": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "config": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "conversionGoals": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string",
+                  "enum": ["event", "pageview", "conversion"]
+                }
+              }
+            }
+          },
+          "targeting": {
+            "type": "object",
+            "properties": {
+              "userIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "countries": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "environments": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "custom": {
+                "type": "object"
+              }
+            }
+          },
+          "trafficAllocation": {
+            "type": "object",
+            "properties": {
+              "percentage": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "startDate": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "endDate": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "createdBy": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "statistics": {
+            "type": "object",
+            "properties": {
+              "totalExposures": {
+                "type": "integer"
+              },
+              "totalConversions": {
+                "type": "integer"
+              },
+              "conversionRates": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "required": ["id", "name", "status", "variants", "trafficAllocation"]
+      },
+      "FeatureFlag": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "new_calculator"
+          },
+          "enabled": {
+            "type": "boolean",
+            "example": true
+          },
+          "rolloutPercentage": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "example": 50
+          },
+          "conditions": {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "environment": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "custom": {
+                "type": "object"
+              }
+            }
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string"
+              },
+              "owner": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        },
+        "required": ["name", "enabled"]
+      },
+      "FeatureFlagContext": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "environment": {
+            "type": "string"
+          },
+          "custom": {
+            "type": "object"
+          }
+        }
+      },
+      "FeedbackSubmission": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "example": "ui_ux"
+          },
+          "rating": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "example": 4
+          },
+          "comment": {
+            "type": "string",
+            "example": "The calculator interface is intuitive, but could use better mobile optimization."
+          },
+          "page": {
+            "type": "string",
+            "example": "/calculator"
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"],
+            "example": "medium"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": ["mobile", "calculator", "ui"]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["new", "reviewed", "resolved", "archived"],
+            "default": "new"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "gdprConsent": {
+            "type": "boolean",
+            "example": true
+          },
+          "isSpam": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": ["category", "rating", "comment", "timestamp", "gdprConsent"]
+      },
+      "FeedbackSubmissionCreate": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "example": "ui_ux"
+          },
+          "rating": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "example": 4
+          },
+          "comment": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 1000,
+            "example": "The calculator interface is intuitive, but could use better mobile optimization."
+          },
+          "page": {
+            "type": "string",
+            "example": "/calculator"
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"],
+            "default": "medium"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10
+          },
+          "gdprConsent": {
+            "type": "boolean",
+            "description": "Required GDPR consent for data processing"
+          }
+        },
+        "required": ["category", "rating", "comment", "gdprConsent"]
+      },
+      "FeedbackStats": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer"
+          },
+          "averageRating": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "categoryBreakdown": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer"
+            }
+          },
+          "ratingDistribution": {
+            "type": "object",
+            "properties": {
+              "1": {
+                "type": "integer"
+              },
+              "2": {
+                "type": "integer"
+              },
+              "3": {
+                "type": "integer"
+              },
+              "4": {
+                "type": "integer"
+              },
+              "5": {
+                "type": "integer"
+              }
+            }
+          },
+          "recentTrend": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "count": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "priorityBreakdown": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer"
+            }
+          },
+          "spamRate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "gdprComplianceRate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
+        }
+      },
+      "FeedbackStatsRequest": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Filter by feedback category"
+          },
+          "rating": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Filter by rating score"
+          },
+          "page": {
+            "type": "string",
+            "description": "Filter by page where feedback was submitted"
+          },
+          "dateFrom": {
+            "type": "string",
+            "format": "date",
+            "description": "Filter feedback from this date (YYYY-MM-DD)"
+          },
+          "dateTo": {
+            "type": "string",
+            "format": "date",
+            "description": "Filter feedback until this date (YYYY-MM-DD)"
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"],
+            "description": "Filter by priority level"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["new", "reviewed", "resolved", "archived"],
+            "description": "Filter by feedback status"
+          }
+        }
+      },
+      "AffiliateClickData": {
+        "type": "object",
+        "properties": {
+          "affiliate": {
+            "type": "string",
+            "enum": ["bol", "coolblue", "amazon"],
+            "example": "bol"
+          },
+          "productId": {
+            "type": "string",
+            "example": "energy-drink-cola-330ml"
+          },
+          "flavorId": {
+            "type": "string",
+            "example": "cola-kick"
+          },
+          "referrer": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL where the click originated"
+          },
+          "userAgent": {
+            "type": "string",
+            "description": "User agent string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Click timestamp"
+          }
+        },
+        "required": ["affiliate"]
+      },
+      "AffiliateConversionData": {
+        "type": "object",
+        "properties": {
+          "affiliate": {
+            "type": "string",
+            "enum": ["bol", "coolblue", "amazon"],
+            "example": "bol"
+          },
+          "attributionId": {
+            "type": "string",
+            "example": "attr_abc123def456ghi789",
+            "description": "Attribution ID from click tracking"
+          },
+          "value": {
+            "type": "number",
+            "minimum": 0,
+            "example": 24.99,
+            "description": "Conversion value"
+          },
+          "currency": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$",
+            "example": "EUR",
+            "description": "Three-letter currency code"
+          },
+          "productId": {
+            "type": "string",
+            "example": "energy-drink-cola-330ml"
+          },
+          "flavorId": {
+            "type": "string",
+            "example": "cola-kick"
+          },
+          "conversionType": {
+            "type": "string",
+            "enum": ["purchase", "signup", "trial"],
+            "example": "purchase"
+          },
+          "orderId": {
+            "type": "string",
+            "example": "order_12345"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Conversion timestamp"
+          }
+        },
+        "required": ["affiliate", "attributionId"]
+      },
+      "GDPRRights": {
+        "type": "object",
+        "properties": {
+          "access": {
+            "type": "boolean",
+            "description": "Right to access personal data"
+          },
+          "rectification": {
+            "type": "boolean",
+            "description": "Right to rectification"
+          },
+          "erasure": {
+            "type": "boolean",
+            "description": "Right to erasure (right to be forgotten)"
+          },
+          "restriction": {
+            "type": "boolean",
+            "description": "Right to restrict processing"
+          },
+          "portability": {
+            "type": "boolean",
+            "description": "Right to data portability"
+          },
+          "objection": {
+            "type": "boolean",
+            "description": "Right to object"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "User authentication and age verification endpoints"
+    },
+    {
+      "name": "Security",
+      "description": "Security-related endpoints like CSRF token generation"
+    },
+    {
+      "name": "Core Data",
+      "description": "Core data endpoints for flavors, ingredients, and suppliers"
+    },
+    {
+      "name": "A/B Testing",
+      "description": "A/B test management and configuration endpoints"
+    },
+    {
+      "name": "Feature Management",
+      "description": "Feature flag management and configuration"
+    },
+    {
+      "name": "Analytics",
+      "description": "Analytics and feedback collection endpoints"
+    },
+    {
+      "name": "Affiliate Tracking",
+      "description": "Affiliate marketing and conversion tracking"
+    },
+    {
+      "name": "Search",
+      "description": "Search functionality across all data types"
+    },
+    {
+      "name": "Bulk Operations",
+      "description": "Bulk data retrieval and processing endpoints"
+    },
+    {
+      "name": "Performance Monitoring",
+      "description": "Performance metrics and optimization endpoints"
+    },
+    {
+      "name": "System",
+      "description": "System health and monitoring endpoints"
+    },
+    {
+      "name": "GDPR Compliance",
+      "description": "GDPR compliance and data rights endpoints"
+    }
+  ]
+}

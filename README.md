@@ -1,25 +1,31 @@
-# Voltage - The Ultimate DIY Energy Drink Guide
+# Voltage - The Ultimate DIY Soda Platform
 
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-15.1.6-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC)](https://tailwindcss.com/)
 
-> ⚠️ **CRITICAL SAFETY WARNING**: Pure caffeine is potentially lethal. This guide emphasizes EU-compliant, safe mixing practices. Always use precision scales (0.001g) and follow dosage limits strictly.
+> ⚠️ **SAFETY WARNING**: Creating beverages involves handling various ingredients including caffeine and food additives. This platform emphasizes safety-first practices with real-time EU compliance validation. Always use precision scales and follow safety protocols strictly.
 
 ## 🌟 Overview
 
-Voltage is the central hub for home energy drink enthusiasts worldwide. Our interactive web application empowers users to create their own EU-compliant, safe, and powerful energy drinks at home. Currently focused on our Netherlands MVP, we're expanding globally to become the go-to resource for DIY energy drink recipes.
+Voltage is transforming from an energy drink calculator into the central hub for all DIY soda creation, expanding from 40+ energy drink flavors to a comprehensive library of 100+ soda recipes across classic and energy-enhanced categories. Currently in our Netherlands MVP phase, we're building toward becoming the global go-to resource for DIY soda creation worldwide.
 
-### 🎯 Mission
-To democratize energy drink creation by providing:
-- **Precision recipes** for famous brands (Red Bull, Monster, etc.)
-- **Safety-first approach** with real-time EU compliance validation
-- **Cost-effective alternatives** to commercial drinks
-- **Educational resources** for responsible mixing
+### 🎯 Vision
+**Current State**: Energy drink enthusiasts creating EU-compliant, safe, and powerful energy drinks at home
+**Target State**: The ultimate DIY soda creation platform - from homemade cola to energy-infused citrus blends
 
-### 💼 Business Model
-We monetize through affiliate partnerships with ingredient suppliers and syrup manufacturers. Users can purchase ingredients directly through our curated links to trusted Dutch retailers like Bol.com, AH, and specialized suppliers. Revenue streams include affiliate commissions from ingredient purchases, potential premium features for advanced recipes, and future expansion into branded merchandise and educational content.
+### 💼 Business Model Evolution
+**Current**: Monetize through affiliate partnerships with Dutch ingredient suppliers
+**Target**: Amazon affiliate revenue from syrup sales, equipment, and ingredients across global regions
+**Revenue Streams**: Ingredient purchases, premium features, branded merchandise, and educational content
+
+### 📈 Expansion Roadmap
+- **Current**: 40+ energy drink recipes with Netherlands focus
+- **Phase 1**: Classic sodas (cola, citrus, fruit, cream soda, root beer, ginger ale)
+- **Phase 2**: Energy-enhanced sodas with differentiated safety protocols
+- **Phase 3**: Global Amazon integration with multi-region support
+- **Target**: 100+ recipes across all soda categories with worldwide reach
 
 ## ✨ Features
 
@@ -28,12 +34,14 @@ We monetize through affiliate partnerships with ingredient suppliers and syrup m
 - **Batch Scaler**: Scale recipes for any serving size (250ml to 500ml cans)
 - **Cost Estimator**: Real-time pricing from Dutch suppliers
 - **Dilution Guide**: Perfect syrup-to-water ratios
+- **Multi-Mode Support**: Separate logic for DIY recipes vs premade syrups (planned)
 
 ### 🧪 Flavor Alchemy
-- **40+ Recipes**: From Red Bull clones to tropical chaos blends
+- **40+ Energy Drink Recipes**: From Red Bull clones to tropical chaos blends
 - **Base Options**: Classic sugar, Zero sugar-free, Plain for customization
 - **Compatibility Matrix**: See which flavors work with which bases
 - **Custom Blends**: Mix and match ingredients safely
+- **Expansion Target**: 100+ recipes across classic sodas, energy-enhanced, and specialty categories
 
 ### 📚 Master Guide
 - **Phase-by-Phase Workflow**: Step-by-step mixing instructions
@@ -46,24 +54,21 @@ We monetize through affiliate partnerships with ingredient suppliers and syrup m
 - **Dosage Validation**: Caffeine limits, preservative thresholds
 - **Age Verification**: 18+ restrictions for high-caffeine recipes
 - **Emergency Contacts**: Quick access to Dutch poison control
+- **Differentiated Safety**: Separate protocols for classic sodas vs energy drinks (planned)
+- **Global Compliance**: Region-specific safety guidelines and ingredient restrictions (planned)
 
-### 🔐 Security & Privacy
-- **Age Verification**: Mandatory 18+ verification for calculator access with persistent modal system
-- **GDPR Compliance**: Comprehensive data protection with cookie consent banners, data export/deletion APIs, and privacy controls
-- **CSRF Protection**: Token-based cross-site request forgery protection for all forms
-- **Rate Limiting**: Intelligent API rate limiting (100 requests/15min per IP) with abuse prevention
+### 💰 Affiliate Integration
+- **Dutch Suppliers**: Curated links to Bol.com, AH, and specialized suppliers
+- **Conversion Tracking**: Advanced affiliate analytics and attribution
+- **Amazon Integration**: Global affiliate network with regional variants (planned)
+- **Cost Comparison**: DIY vs premade options analysis (planned)
 
-### 📊 Monitoring & Performance
-- **Core Web Vitals Tracking**: Real-time performance monitoring with web-vitals library integration
-- **Error Monitoring**: Sentry-powered error tracking and alerting for production issues
-- **Caching System**: Redis-based multi-layer caching (data, API responses, static assets) with configurable TTL
-- **Health Monitoring**: Dedicated health check endpoints and system status dashboards
-
-### 🌍 Netherlands Focus (MVP)
-- **Local Suppliers**: Curated Dutch retailers and specialty shops
-- **Metric Units**: All measurements in grams/ml/liters
-- **Dutch Interface**: Bilingual (English/Dutch) support
-- **Local Regulations**: Netherlands-specific safety guidelines
+### 📊 Analytics & Monitoring
+- **Core Web Vitals Tracking**: Real-time performance monitoring
+- **Error Monitoring**: Sentry-powered error tracking and alerting
+- **Caching System**: Redis-based multi-layer caching
+- **Health Monitoring**: Dedicated health check endpoints
+- **Global Analytics**: User segmentation and conversion tracking across regions (planned)
 
 ## 🚀 Getting Started
 
@@ -165,27 +170,67 @@ energy-drink-app/
 
 ## 🌐 Expansion Plans
 
-### Phase 1: Netherlands MVP ✅
+### Phase 1: Netherlands Energy Drink MVP ✅
 - Complete Dutch supplier integration
 - EU compliance validation
 - Bilingual interface
+- 40+ energy drink recipes
 
-### Phase 2: European Expansion (2025)
-- Belgium, Germany, France localization
-- Local supplier partnerships
-- Multi-language support
+### Phase 2: Classic Soda Platform (2025 Q1)
+- Classic Sodas: Cola, citrus, fruit, cream soda, root beer, ginger ale
+- Amazon affiliate integration with regional variants
+- Safety protocol differentiation (caffeinated vs non-caffeinated)
+- Global localization support
 
-### Phase 3: Global Launch (2026)
-- Worldwide supplier network
+### Phase 3: Energy-Enhanced Sodas (2025 Q2)
+- Hybrid recipes combining classic sodas with energy ingredients
+- Enhanced age verification for mixed-caffeine products
+- Advanced safety validation for energy-enhanced categories
+- Premade syrup integration marketplace
+
+### Phase 4: Global Launch (2025 Q3)
+- Worldwide supplier network with Amazon integration
 - Advanced customization features
 - Mobile app companion
 - AI-powered recipe suggestions
+- Social features and community sharing
 
-### Future Features
-- Smart scale integration
-- Barcode ingredient scanning
-- Social recipe sharing
-- Professional brewing tools
+### Target State: Complete DIY Soda Ecosystem (2026)
+- **100+ Recipes**: Comprehensive library across all soda categories
+- **Global Reach**: Multi-region Amazon integration with automatic localization
+- **Business Model**: Amazon affiliate revenue across international markets
+- **Platform Features**: Recipe sharing, user-generated content, premium tools
+
+### Future Innovation Pipeline
+- Smart scale integration with real-time measurements
+- Barcode ingredient scanning for automatic recipe matching
+- Social recipe sharing and community challenges
+- Professional brewing tools and commercial applications
+- AI-powered flavor combination suggestions
+- IoT integration with smart appliances
+
+## 📊 Current Data Models
+
+### Ingredients (Current: 50+ items)
+- **Safety Limits**: Meticulously curated with EU compliance flags
+- **Supplier Integration**: Real-time pricing and availability tracking
+- **Expansion Target**: 200+ ingredients covering all soda categories
+
+### Bases (Current: 3 types)
+- **Classic**: Traditional sugar-based energy drink foundation
+- **Zero**: Sugar-free alternatives with artificial sweeteners
+- **Plain**: Customizable base for advanced users
+- **Expansion Target**: 10+ base types for different soda categories
+
+### Flavors (Current: 40+ recipes)
+- **Energy Focus**: Caffeine-heavy recipes with safety validation
+- **Compatibility Matrix**: Intelligent flavor-base matching
+- **Expansion Target**: 100+ recipes across classic sodas, energy-enhanced, and specialty
+
+### Suppliers (Current: Netherlands focus)
+- **Local Integration**: 25+ Dutch retailers and specialty shops
+- **Affiliate Tracking**: Advanced conversion analytics
+- **Expansion Target**: Global Amazon network across 8+ regions
 
 ## 🤝 Contributing
 

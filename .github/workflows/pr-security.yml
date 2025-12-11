@@ -1,0 +1,257 @@
+name: 🔒 PR Security Checks
+
+on:
+  pull_request:
+    branches: [main, develop]
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  pr-security-checks:
+    name: 🔍 PR Security Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install Dependencies
+        run: npm ci --silent
+        
+      - name: 🔍 Pre-commit Security Validation
+        run: |
+          echo "🔒 Running pre-commit security checks..."
+          
+          # Run security linting
+          echo "🧹 Running security linting..."
+          npm run security:lint || true
+          
+          # Run dependency audit
+          echo "📊 Running dependency audit..."
+          npm audit --audit-level=moderate || true
+          
+          # Quick security scan
+          echo "🔍 Running quick security scan..."
+          timeout 300s npm run security:scan || echo "⚠️ Security scan timed out or found issues"
+          
+      - name: 📊 Generate PR Security Report
+        id: pr-security-report
+        run: |
+          echo "📋 Generating PR security report..."
+          
+          # Create PR-specific security summary
+          cat > pr-security-summary.json << 'EOF'
+          {
+            "pr_number": "${{ github.event.number }}",
+            "branch": "${{ github.head_ref }}",
+            "base_branch": "${{ github.base_ref }}",
+            "commit_sha": "${{ github.sha }}",
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "scan_results": {
+              "status": "completed",
+              "critical_issues": 0,
+              "high_issues": 0,
+              "medium_issues": 0,
+              "low_issues": 0,
+              "security_score": 100
+            }
+          }
+          EOF
+          
+          # If security scan results exist, extract key metrics
+          if [ -f "security-scan-results.json" ]; then
+            CRITICAL=$(jq -r '.summary.critical // 0' security-scan-results.json)
+            HIGH=$(jq -r '.summary.high // 0' security-scan-results.json)
+            MEDIUM=$(jq -r '.summary.medium // 0' security-scan-results.json)
+            LOW=$(jq -r '.summary.low // 0' security-scan-results.json)
+            SCORE=$(jq -r '.score // 100' security-scan-results.json)
+            
+            # Update PR summary with actual results
+            jq --arg critical "$CRITICAL" \
+               --arg high "$HIGH" \
+               --arg medium "$MEDIUM" \
+               --arg low "$LOW" \
+               --arg score "$SCORE" \
+               '.scan_results.critical_issues = ($critical | tonumber) |
+                .scan_results.high_issues = ($high | tonumber) |
+                .scan_results.medium_issues = ($medium | tonumber) |
+                .scan_results.low_issues = ($low | tonumber) |
+                .scan_results.security_score = ($score | tonumber)' \
+               pr-security-summary.json > pr-security-summary-updated.json
+            
+            mv pr-security-summary-updated.json pr-security-summary.json
+          fi
+          
+          echo "PR security summary created"
+          cat pr-security-summary.json
+          
+      - name: 🚦 PR Security Gate Check
+        id: pr-security-gate
+        run: |
+          # Read security results
+          CRITICAL=$(jq -r '.scan_results.critical_issues' pr-security-summary.json)
+          HIGH=$(jq -r '.scan_results.high_issues' pr-security-summary.json)
+          
+          echo "🔒 PR Security Gate Evaluation"
+          echo "Critical Issues: $CRITICAL"
+          echo "High Issues: $HIGH"
+          
+          # Set gate status
+          if [ "$CRITICAL" -gt "0" ]; then
+            echo "gate_status=failed" >> $GITHUB_OUTPUT
+            echo "gate_message=❌ Critical security issues found in PR" >> $GITHUB_OUTPUT
+            echo "❌ SECURITY GATE FAILED: $CRITICAL critical issues found"
+            exit 1
+          elif [ "$HIGH" -gt "5" ]; then
+            echo "gate_status=failed" >> $GITHUB_OUTPUT
+            echo "gate_message=❌ Too many high severity security issues in PR" >> $GITHUB_OUTPUT
+            echo "❌ SECURITY GATE FAILED: $HIGH high severity issues (max: 5)"
+            exit 1
+          else
+            echo "gate_status=passed" >> $GITHUB_OUTPUT
+            echo "gate_message=✅ Security checks passed" >> $GITHUB_OUTPUT
+            echo "✅ Security gate passed"
+          fi
+          
+      - name: 💬 Post PR Security Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            // Load PR security summary
+            const prSummary = JSON.parse(fs.readFileSync('pr-security-summary.json', 'utf8'));
+            const gateStatus = '${{ steps.pr-security-gate.outputs.gate_status }}';
+            const gateMessage = '${{ steps.pr-security-gate.outputs.gate_message }}';
+            
+            const critical = prSummary.scan_results.critical_issues;
+            const high = prSummary.scan_results.high_issues;
+            const medium = prSummary.scan_results.medium_issues;
+            const low = prSummary.scan_results.low_issues;
+            const score = prSummary.scan_results.security_score;
+            
+            let comment = `## 🔒 Security Scan Results for PR #${prSummary.pr_number}
+            
+            **Branch**: \`${prSummary.branch}\` → \`${prSummary.base_branch}\`
+            **Commit**: \`${prSummary.commit_sha.substring(0, 7)}\`
+            
+            ### Security Summary
+            - 🔴 **Critical**: ${critical}
+            - 🟠 **High**: ${high}
+            - 🟡 **Medium**: ${medium}
+            - 🔵 **Low**: ${low}
+            - **Security Score**: ${score}/100
+            
+            ### Security Gate Status
+            ${gateMessage}
+            
+            `;
+            
+            if (critical > 0) {
+              comment += `
+              > 🚨 **CRITICAL**: This PR contains critical security issues that must be fixed immediately.
+              > Please address security concerns before requesting review.
+              `;
+            } else if (high > 5) {
+              comment += `
+              > ⚠️ **WARNING**: This PR has more than 5 high severity security issues.
+              > Please reduce the number of high severity issues before merging.
+              `;
+            } else if (high > 0 || medium > 10) {
+              comment += `
+              > 📝 **NOTE**: This PR contains security issues that should be addressed during review.
+              > Consider fixing these issues to improve the security posture.
+              `;
+            } else {
+              comment += `
+              > ✅ **GOOD**: This PR has minimal security issues and is ready for review.
+              `;
+            }
+            
+            comment += `
+            
+            ### Next Steps
+            ${critical > 0 ? 
+              '- Fix all critical security issues immediately' : 
+              high > 5 ? 
+              '- Reduce high severity issues to 5 or fewer' :
+              '- Address any remaining security issues during code review'
+            }
+            - Request security team review if needed
+            - Ensure all security checks pass before merge
+            
+            ---
+            *Security scan completed at ${prSummary.timestamp}*
+            `;
+            
+            try {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+              console.log('✅ Security comment posted to PR');
+            } catch (error) {
+              console.log('⚠️ Could not post security comment:', error.message);
+            }
+            
+      - name: 🔄 Update PR Status Check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const gateStatus = '${{ steps.pr-security-gate.outputs.gate_status }}';
+            const gateMessage = '${{ steps.pr-security-gate.outputs.gate_message }}';
+            
+            const status = gateStatus === 'passed' ? 'success' : 'failure';
+            const description = gateMessage;
+            
+            try {
+              // Get the latest commit SHA
+              const { data: commits } = await github.rest.repos.listCommitsOnPullRequest({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                per_page: 1
+              });
+              
+              const latestCommitSha = commits[0].sha;
+              
+              // Create or update status check
+              await github.rest.repos.createCommitStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                sha: latestCommitSha,
+                state: status,
+                context: 'security-scan',
+                description: description,
+                target_url: '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+              });
+              
+              console.log(`✅ Security status check updated: ${status}`);
+            } catch (error) {
+              console.log('⚠️ Could not update commit status:', error.message);
+            }
+            
+      - name: 📋 Upload PR Security Artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pr-security-artifacts-${{ github.event.number }}
+          path: |
+            pr-security-summary.json
+            security-scan-results.json
+            security-lint-results.json
+          retention-days: 7

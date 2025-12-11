@@ -2,10 +2,11 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Energy Drink App API",
-    "version": "1.0.0",
-    "description": "API for the Energy Drink Calculator and Recipe Application",
+    "version": "2.0.0",
+    "description": "Comprehensive API for the Energy Drink Calculator, Recipe Management, and Analytics Platform. This is the legacy specification - please use the enhanced version for full functionality.",
     "contact": {
-      "name": "API Support"
+      "name": "API Support Team",
+      "email": "api-support@energydrink.app"
     }
   },
   "servers": [
@@ -14,38 +15,61 @@
       "description": "Development server"
     },
     {
-      "url": "https://your-production-url.com",
-      "description": "Production server"
+      "url": "https://api.energydrink.app",
+      "description": "Production environment"
     }
   ],
-  "security": [
-    {
-      "cookieAuth": []
-    }
-  ],
+  "externalDocs": {
+    "description": "Enhanced API Documentation",
+    "url": "https://docs.energydrink.app/api/enhanced"
+  },
   "paths": {
-    "/auth/check-verification": {
-      "get": {
-        "summary": "GET /auth/check-verification",
-        "description": "",
-        "parameters": [],
+    "/auth/verify-age": {
+      "post": {
+        "summary": "Verify user's age for accessing the application",
+        "description": "Validates user's birth year and sets age verification cookie. Required for accessing age-restricted content and features.",
+        "operationId": "verifyAge",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["birthYear"],
+                "properties": {
+                  "birthYear": {
+                    "type": "integer",
+                    "minimum": 1900,
+                    "maximum": 2010,
+                    "example": 1990,
+                    "description": "User's birth year for age verification"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Age verified successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "verified": {
-                      "type": "boolean"
+                    "success": {
+                      "type": "boolean",
+                      "example": true
                     },
                     "age": {
-                      "type": "number"
+                      "type": "integer",
+                      "example": 34
                     },
                     "verificationDate": {
                       "type": "string",
-                      "format": "date-time"
+                      "format": "date-time",
+                      "example": "2024-01-15T10:30:00.000Z"
                     }
                   }
                 }
@@ -53,59 +77,59 @@
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "Invalid birth year provided",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
           },
           "403": {
-            "description": "Forbidden",
+            "description": "Age verification failed or invalid CSRF token",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
-          },
-          "404": {
-            "description": "Not Found",
+          }
+        },
+        "security": [
+          {
+            "csrfAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/check-verification": {
+      "get": {
+        "summary": "Check current user's age verification status",
+        "description": "Returns whether the current user has been verified for age and provides verification details.",
+        "operationId": "checkVerification",
+        "tags": ["Authentication"],
+        "responses": {
+          "200": {
+            "description": "Verification status retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
+                    "verified": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "age": {
+                      "type": "integer",
+                      "example": 34
+                    },
+                    "verificationDate": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-01-15T10:30:00.000Z"
                     }
                   }
                 }
@@ -120,82 +144,23 @@
         ]
       }
     },
-    "/auth/verify-age": {
-      "post": {
-        "summary": "POST /auth/verify-age",
-        "description": "",
-        "parameters": [],
+    "/csrf-token": {
+      "get": {
+        "summary": "Generate CSRF token for form submissions",
+        "description": "Generates a new CSRF token that must be included in the X-CSRF-Token header for all state-changing operations.",
+        "operationId": "generateCSRFToken",
+        "tags": ["Security"],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "CSRF token generated successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "success": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Age verification failed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
+                    "csrfToken": {
                       "type": "string",
-                      "example": "You must be at least 18 years old"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
+                      "example": "abc123def456ghi789..."
                     }
                   }
                 }
@@ -206,98 +171,119 @@
         "security": [
           {
             "cookieAuth": []
-          },
-          {
-            "csrfAuth": []
           }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "description": "Request body"
-              }
-            }
-          }
-        }
+        ]
       }
     },
-    "/csrf-token": {
+    "/flavors": {
       "get": {
-        "summary": "GET /csrf-token",
-        "description": "",
-        "parameters": [],
+        "summary": "Get all energy drink flavors",
+        "description": "Retrieves a list of all available energy drink flavors with their recipes, ingredients, and safety information.",
+        "operationId": "getFlavors",
+        "tags": ["Core Data"],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "List of flavors retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "csrfToken": {
-                      "type": "string"
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FlavorRecipe"
+                      }
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 25
                     }
                   }
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad Request",
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/ingredients": {
+      "get": {
+        "summary": "Get all ingredients",
+        "description": "Retrieves a comprehensive list of all ingredients used in energy drink recipes, including safety information and supplier data.",
+        "operationId": "getIngredients",
+        "tags": ["Core Data"],
+        "responses": {
+          "200": {
+            "description": "List of ingredients retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "error": {
-                      "type": "string"
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Ingredient"
+                      }
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 45
                     }
                   }
                 }
               }
             }
-          },
-          "403": {
-            "description": "Forbidden",
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/suppliers": {
+      "get": {
+        "summary": "Get all suppliers",
+        "description": "Retrieves information about all ingredient suppliers including contact details and product offerings.",
+        "operationId": "getSuppliers",
+        "tags": ["Core Data"],
+        "responses": {
+          "200": {
+            "description": "List of suppliers retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Supplier"
+                      }
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 15
                     }
                   }
                 }
@@ -314,37 +300,13 @@
     },
     "/feature-flags": {
       "get": {
-        "summary": "GET /feature-flags",
-        "description": "",
-        "parameters": [
-          {
-            "name": "name",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Query parameter: name"
-          },
-          {
-            "name": "userId",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Query parameter: userId"
-          },
-          {
-            "name": "environment",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Query parameter: environment"
-          }
-        ],
+        "summary": "Get feature flags",
+        "description": "Retrieves all feature flags or evaluates a specific flag based on context parameters.",
+        "operationId": "getFeatureFlags",
+        "tags": ["Feature Management"],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Feature flags retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -374,66 +336,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
           }
         },
         "security": [
@@ -443,82 +345,34 @@
         ]
       },
       "post": {
-        "summary": "POST /feature-flags",
-        "description": "",
-        "parameters": [],
+        "summary": "Create or update feature flag",
+        "description": "Creates a new feature flag or updates an existing one with configuration and rollout rules.",
+        "operationId": "createOrUpdateFeatureFlag",
+        "tags": ["Feature Management"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeatureFlag"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Feature flag created or updated successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "success": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "example": true
                     },
                     "flag": {
                       "$ref": "#/components/schemas/FeatureFlag"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
                     }
                   }
                 }
@@ -533,104 +387,39 @@
           {
             "csrfAuth": []
           }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "description": "Request body"
-              }
-            }
-          }
-        }
+        ]
       },
       "delete": {
-        "summary": "DELETE /feature-flags",
-        "description": "",
+        "summary": "Delete feature flag",
+        "description": "Permanently removes a feature flag from the system.",
+        "operationId": "deleteFeatureFlag",
+        "tags": ["Feature Management"],
         "parameters": [
           {
             "name": "name",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string"
             },
-            "description": "Query parameter: name"
+            "description": "Name of the feature flag to delete"
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Feature flag deleted successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "success": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "example": true
                     },
-                    "flag": {
-                      "$ref": "#/components/schemas/FeatureFlag"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
+                    "message": {
+                      "type": "string",
+                      "example": "Flag 'new_feature' removed"
                     }
                   }
                 }
@@ -650,74 +439,59 @@
     },
     "/feedback": {
       "post": {
-        "summary": "POST /feedback",
-        "description": "",
-        "parameters": [],
+        "summary": "Submit user feedback",
+        "description": "Allows users to submit feedback about the application including ratings, comments, and suggestions.",
+        "operationId": "submitFeedback",
+        "tags": ["Analytics"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "category": {
+                    "type": "string"
+                  },
+                  "rating": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 5
+                  },
+                  "comment": {
+                    "type": "string"
+                  },
+                  "page": {
+                    "type": "string"
+                  },
+                  "priority": {
+                    "type": "string",
+                    "enum": ["low", "medium", "high", "critical"]
+                  },
+                  "gdprConsent": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["category", "rating", "comment", "gdprConsent"]
+              }
+            }
+          }
+        },
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
+          "201": {
+            "description": "Feedback submitted successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Thank you for your feedback!"
                     }
                   }
                 }
@@ -732,171 +506,34 @@
           {
             "csrfAuth": []
           }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "description": "Request body"
-              }
-            }
-          }
-        }
+        ]
       },
       "get": {
-        "summary": "GET /feedback",
-        "description": "",
-        "parameters": [],
+        "summary": "Get feedback submissions",
+        "description": "Retrieves user feedback submissions with optional filtering and pagination.",
+        "operationId": "getFeedback",
+        "tags": ["Analytics"],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
+            "description": "Feedback submissions retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ]
-      }
-    },
-    "/flavors": {
-      "get": {
-        "summary": "GET /flavors",
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 45
                     }
                   }
                 }
@@ -913,12 +550,13 @@
     },
     "/gdpr/data": {
       "get": {
-        "summary": "GET /gdpr/data",
-        "description": "",
-        "parameters": [],
+        "summary": "Get user data (GDPR access request)",
+        "description": "Provides all user data stored by the application as required by GDPR Article 15 (Right of Access).",
+        "operationId": "getUserData",
+        "tags": ["GDPR Compliance"],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "User data retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -981,66 +619,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1050,82 +628,25 @@
         ]
       },
       "delete": {
-        "summary": "DELETE /gdpr/data",
-        "description": "",
-        "parameters": [],
+        "summary": "Delete user data (GDPR right to erasure)",
+        "description": "Permanently deletes all user data as required by GDPR Article 17 (Right to Erasure).",
+        "operationId": "deleteUserData",
+        "tags": ["GDPR Compliance"],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "User data deleted successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "success": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "example": true
                     },
                     "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
+                      "type": "string",
+                      "example": "All user data has been deleted"
                     }
                   }
                 }
@@ -1145,12 +666,13 @@
     },
     "/gdpr/status": {
       "get": {
-        "summary": "GET /gdpr/status",
-        "description": "",
-        "parameters": [],
+        "summary": "Check GDPR compliance status",
+        "description": "Determines if GDPR regulations apply to the current user and their consent status.",
+        "operationId": "getGDPRStatus",
+        "tags": ["GDPR Compliance"],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "GDPR status retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -1169,66 +691,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1240,12 +702,13 @@
     },
     "/health": {
       "get": {
-        "summary": "GET /health",
-        "description": "",
-        "parameters": [],
+        "summary": "Application health check",
+        "description": "Provides comprehensive health status of the application including uptime, environment, and system metrics.",
+        "operationId": "healthCheck",
+        "tags": ["System"],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Application is healthy",
             "content": {
               "application/json": {
                 "schema": {
@@ -1263,234 +726,6 @@
                       "type": "number"
                     },
                     "environment": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ]
-      }
-    },
-    "/ingredients": {
-      "get": {
-        "summary": "GET /ingredients",
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ]
-      }
-    },
-    "/suppliers": {
-      "get": {
-        "summary": "GET /suppliers",
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
                       "type": "string"
                     }
                   }
@@ -1521,6 +756,14 @@
       }
     },
     "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      },
       "FeatureFlag": {
         "type": "object",
         "properties": {
@@ -1580,50 +823,148 @@
           "enabled"
         ]
       },
-      "ConsentData": {
+      "FlavorRecipe": {
         "type": "object",
         "properties": {
-          "necessary": {
-            "type": "boolean"
+          "id": {
+            "type": "string"
           },
-          "analytics": {
-            "type": "boolean"
+          "name": {
+            "type": "string"
           },
-          "marketing": {
-            "type": "boolean"
+          "profile": {
+            "type": "string"
           },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "ingredientId": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "number"
+                }
+              }
+            }
           },
-          "version": {
+          "compatibleBases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "profile",
+          "ingredients",
+          "compatibleBases"
+        ]
+      },
+      "Ingredient": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "safety": {
+            "type": "object",
+            "properties": {
+              "maxDaily": {
+                "type": "number"
+              },
+              "warningThreshold": {
+                "type": "number"
+              },
+              "euCompliant": {
+                "type": "boolean"
+              },
+              "banned": {
+                "type": "boolean"
+              }
+            }
+          },
+          "suppliers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "category",
+          "unit",
+          "safety",
+          "suppliers"
+        ]
+      },
+      "Supplier": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "location": {
             "type": "string"
           }
         },
         "required": [
-          "necessary",
-          "timestamp",
-          "version"
+          "id",
+          "name",
+          "url",
+          "location"
         ]
-      },
-      "UserData": {
-        "type": "object",
-        "properties": {
-          "ageVerified": {
-            "type": "boolean"
-          },
-          "verificationTimestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "ipAddress": {
-            "type": "string"
-          },
-          "userAgent": {
-            "type": "string"
-          }
-        }
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "User authentication and age verification endpoints"
+    },
+    {
+      "name": "Security",
+      "description": "Security-related endpoints like CSRF token generation"
+    },
+    {
+      "name": "Core Data",
+      "description": "Core data endpoints for flavors, ingredients, and suppliers"
+    },
+    {
+      "name": "Feature Management",
+      "description": "Feature flag management and configuration"
+    },
+    {
+      "name": "Analytics",
+      "description": "Analytics and feedback collection endpoints"
+    },
+    {
+      "name": "GDPR Compliance",
+      "description": "GDPR compliance and data rights endpoints"
+    },
+    {
+      "name": "System",
+      "description": "System health and monitoring endpoints"
+    }
+  ]
 }
