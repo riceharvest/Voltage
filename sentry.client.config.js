@@ -10,11 +10,11 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0,
   replaysSessionSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 0.0,
   integrations: [
-    new Sentry.BrowserTracing({
+    new BrowserTracing({
       // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
       tracePropagationTargets: ["localhost", /^https:\/\/.*\.vercel\.app\/api/],
     }),
-    new Sentry.Replay({
+    new Replay({
       maskAllText: true,
       blockAllMedia: true,
     }),

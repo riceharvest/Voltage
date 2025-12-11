@@ -46,8 +46,53 @@ export default function FlavorsPage() {
   const ingredientNames = Object.fromEntries(ingredientsData.map((ing: Ingredient) => [ing.id, ing.name]));
   const ingredientsFullMap = Object.fromEntries(ingredientsData.map((ing: Ingredient) => [ing.id, ing]));
 
-  const handleAffiliateClick = (flavor: FlavorRecipe) => {
-    trackAffiliateClick('bol.com', flavor.id);
+  const handleAffiliateClick = async (flavor: FlavorRecipe) => {
+    try {
+      // Track the click and get attribution ID
+      const attributionId = trackAffiliateClick('bol.com', flavor.id);
+      
+      // Send detailed click data to our tracking API
+      await fetch('/api/affiliate/track-click', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          affiliate: 'bol.com',
+          productId: flavor.id,
+          flavorId: flavor.id,
+          timestamp: new Date().toISOString()
+        }),
+      });
+      
+      // Store attribution ID for potential conversion tracking
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(`affiliate_attribution_${flavor.id}`, attributionId);
+      }
+    } catch (error) {
+      console.error('Error tracking affiliate click:', error);
+      // Still allow the link to work even if tracking fails
+    }
+  };
+
+  const getAffiliateName = (flavor: FlavorRecipe): string => {
+    // Determine affiliate partner based on affiliate link URL
+    if (flavor.affiliateLink?.includes('bol.com')) {
+      return 'bol.com';
+    } else if (flavor.affiliateLink?.includes('coolblue')) {
+      return 'coolblue.com';
+    }
+    return 'partner';
+  };
+
+  const getAffiliateButtonText = (flavor: FlavorRecipe): string => {
+    const affiliate = getAffiliateName(flavor);
+    if (affiliate === 'bol.com') {
+      return 'Buy on bol.com';
+    } else if (affiliate === 'coolblue.com') {
+      return 'Buy at Coolblue';
+    }
+    return 'Buy Now';
   };
 
   if (loading) {
@@ -74,6 +119,9 @@ export default function FlavorsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {flavors.map(flavor => {
           const hexColor = getColorHex(flavor.color);
+          const affiliateName = getAffiliateName(flavor);
+          const buttonText = getAffiliateButtonText(flavor);
+          
           return (
           <Card key={flavor.id} className="group border-white/10 bg-zinc-900/40 hover:bg-zinc-900/80 hover:border-cyan-400/50 transition-all duration-500 overflow-hidden backdrop-blur-sm">
 
@@ -156,8 +204,10 @@ export default function FlavorsPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => handleAffiliateClick(flavor)}
+                      data-affiliate={affiliateName}
+                      data-flavor-id={flavor.id}
                     >
-                      Buy on bol.com
+                      {buttonText}
                     </a>
                   </Button>
                 </div>

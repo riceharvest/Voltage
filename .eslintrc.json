@@ -1,9 +1,67 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"],
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript"
+  ],
   "ignorePatterns": [
     ".next/**",
     "out/**",
     "build/**",
-    "next-env.d.ts"
-  ]
+    "next-env.d.ts",
+    "node_modules/**"
+  ],
+  "plugins": ["security"],
+  "rules": {
+    // Security rules from eslint-plugin-security
+    "security/detect-buffer-noassert": "error",
+    "security/detect-child-process": "error",
+    "security/detect-disable-mustache-escape": "error",
+    "security/detect-eval-with-expression": "error",
+    "security/detect-no-csrf-before-method-override": "error",
+    "security/detect-non-literal-fs-filename": "error",
+    "security/detect-non-literal-regexp": "error",
+    "security/detect-non-literal-require": "error",
+    "security/detect-object-injection": "warn",
+    "security/detect-possible-timing-attacks": "warn",
+    "security/detect-pseudoRandomBytes": "error",
+    "security/detect-unsafe-regex": "error",
+    
+    // Additional security-focused rules
+    "no-eval": "error",
+    "no-implied-eval": "error",
+    "no-new-func": "error",
+    "no-script-url": "error",
+    "no-alert": "warn",
+    "no-debugger": "error",
+    "no-console": "warn",
+    
+    // TypeScript basic rules
+    "@typescript-eslint/no-explicit-any": "warn",
+    
+    // Additional protections
+    "prefer-const": "error",
+    "no-var": "error",
+    "no-duplicate-imports": "error",
+    "no-unused-expressions": "error",
+    
+    // React security
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    
+    // Node.js security
+    "no-process-env": "error",
+    "no-process-exit": "error"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  }
 }
