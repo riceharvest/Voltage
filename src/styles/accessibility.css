@@ -1,0 +1,426 @@
+/* Accessibility Styles for Voltage Platform */
+
+/* Skip Links */
+.skip-links {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  z-index: 1000;
+  transition: top 0.3s ease;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: var(--primary);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 0 0 4px 4px;
+  font-weight: 600;
+  z-index: 1001;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0%);
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+/* High Contrast Mode */
+.high-contrast {
+  --background: #000000;
+  --foreground: #ffffff;
+  --muted: #333333;
+  --muted-foreground: #cccccc;
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: #333333;
+  --secondary-foreground: #ffffff;
+  --accent: #666666;
+  --accent-foreground: #ffffff;
+  --destructive: #ff0000;
+  --destructive-foreground: #ffffff;
+  --border: #ffffff;
+  --input: #333333;
+  --ring: #ffffff;
+  --radius: 0;
+}
+
+.high-contrast * {
+  border-color: var(--border) !important;
+}
+
+.high-contrast button,
+.high-contrast input,
+.high-contrast select,
+.high-contrast textarea {
+  border: 2px solid var(--border) !important;
+  background: var(--background) !important;
+  color: var(--foreground) !important;
+}
+
+.high-contrast a {
+  color: var(--primary) !important;
+  text-decoration: underline !important;
+}
+
+.high-contrast a:hover,
+.high-contrast a:focus {
+  background: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+}
+
+/* Large Text Mode */
+.large-text {
+  font-size: 120%;
+}
+
+.large-text h1 { font-size: 2.5rem; }
+.large-text h2 { font-size: 2rem; }
+.large-text h3 { font-size: 1.75rem; }
+.large-text h4 { font-size: 1.5rem; }
+.large-text h5 { font-size: 1.25rem; }
+.large-text h6 { font-size: 1.125rem; }
+
+.large-text p,
+.large-text li,
+.large-text td,
+.large-text th {
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.large-text button,
+.large-text input,
+.large-text select,
+.large-text textarea {
+  font-size: 1.125rem;
+  padding: 12px 16px;
+}
+
+/* Reduced Motion */
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Enhanced Focus Indicators */
+.enhanced-focus *:focus {
+  outline: 3px solid var(--ring) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 3px var(--ring) !important;
+}
+
+.enhanced-focus button:focus,
+.enhanced-focus input:focus,
+.enhanced-focus select:focus,
+.enhanced-focus textarea:focus {
+  outline: 3px solid var(--ring) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 3px var(--ring) !important;
+}
+
+.enhanced-focus a:focus {
+  outline: 3px solid var(--ring) !important;
+  outline-offset: 2px !important;
+  text-decoration: none !important;
+  box-shadow: 0 0 0 3px var(--ring) !important;
+}
+
+/* Color Blind Friendly Patterns */
+.colorblind-friendly .category-classic::before {
+  content: "◆ ";
+  color: var(--primary);
+}
+
+.colorblind-friendly .category-energy::before {
+  content: "▲ ";
+  color: var(--primary);
+}
+
+.colorblind-friendly .category-hybrid::before {
+  content: "● ";
+  color: var(--primary);
+}
+
+/* Screen Reader Only Content */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.sr-only.focusable:active,
+.sr-only.focusable:focus {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: inherit !important;
+  margin: inherit !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: inherit !important;
+}
+
+/* Keyboard Navigation Enhancements */
+.keyboard-navigation [tabindex]:focus {
+  outline: 3px solid var(--ring) !important;
+  outline-offset: 2px !important;
+}
+
+.keyboard-navigation .focus-trap:focus {
+  outline: none !important;
+}
+
+/* High Contrast Button States */
+.high-contrast button:hover,
+.high-contrast button:focus {
+  background: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+  border-color: var(--primary) !important;
+}
+
+.high-contrast button:active {
+  background: var(--secondary) !important;
+  color: var(--secondary-foreground) !important;
+}
+
+/* Accessible Form Elements */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.form-label.required::after {
+  content: " *";
+  color: var(--destructive);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--ring);
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-error {
+  color: var(--destructive);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.form-help {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Accessible Card Components */
+.accessible-card {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  background: var(--background);
+  transition: border-color 0.2s ease;
+}
+
+.accessible-card:focus-within {
+  border-color: var(--ring);
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.accessible-card-header {
+  margin-bottom: 0.75rem;
+}
+
+.accessible-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 0;
+}
+
+.accessible-card-description {
+  color: var(--muted-foreground);
+  margin: 0.25rem 0 0 0;
+}
+
+/* Accessible Navigation */
+.accessible-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.accessible-nav-item {
+  margin-bottom: 0.5rem;
+}
+
+.accessible-nav-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--foreground);
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: background-color 0.2s ease;
+}
+
+.accessible-nav-link:hover,
+.accessible-nav-link:focus {
+  background: var(--accent);
+  color: var(--accent-foreground);
+  text-decoration: none;
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.accessible-nav-link.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* Loading States */
+.loading-spinner {
+  border: 3px solid var(--muted);
+  border-top: 3px solid var(--primary);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+.loading-text {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error States */
+.error-message {
+  color: var(--destructive);
+  background: var(--destructive-foreground);
+  border: 2px solid var(--destructive);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.error-icon {
+  color: var(--destructive);
+  margin-right: 0.5rem;
+}
+
+/* Success States */
+.success-message {
+  color: var(--success);
+  background: color-mix(in srgb, var(--success) 10%, transparent);
+  border: 2px solid var(--success);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.success-icon {
+  color: var(--success);
+  margin-right: 0.5rem;
+}
+
+/* Warning States */
+.warning-message {
+  color: var(--warning);
+  background: color-mix(in srgb, var(--warning) 10%, transparent);
+  border: 2px solid var(--warning);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.warning-icon {
+  color: var(--warning);
+  margin-right: 0.5rem;
+}
+
+/* Responsive Design for Accessibility */
+@media (max-width: 768px) {
+  .skip-link {
+    font-size: 1rem;
+    padding: 12px 20px;
+  }
+  
+  .accessible-card {
+    padding: 1.5rem;
+  }
+  
+  .accessible-nav-link {
+    padding: 1rem 1.25rem;
+    font-size: 1.125rem;
+  }
+  
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-size: 1.125rem;
+    padding: 1rem;
+  }
+}
+
+/* Print Styles for Accessibility */
+@media print {
+  .skip-links {
+    display: none;
+  }
+  
+  .high-contrast * {
+    background: white !important;
+    color: black !important;
+  }
+  
+  a {
+    text-decoration: underline !important;
+  }
+  
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+  }
+}

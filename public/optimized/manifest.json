@@ -1,0 +1,87 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2025-12-10T12:52:52.634Z",
+  "assets": {
+    "images": [
+      {
+        "name": "file.svg",
+        "path": "file.svg",
+        "size": 391,
+        "modified": "2025-12-04T13:24:54.719Z",
+        "hash": "kl4et"
+      },
+      {
+        "name": "globe.svg",
+        "path": "globe.svg",
+        "size": 1035,
+        "modified": "2025-12-04T13:24:54.725Z",
+        "hash": "nn4ek7"
+      },
+      {
+        "name": "next.svg",
+        "path": "next.svg",
+        "size": 1375,
+        "modified": "2025-12-04T13:24:54.730Z",
+        "hash": "drs93j"
+      },
+      {
+        "name": "vercel.svg",
+        "path": "vercel.svg",
+        "size": 128,
+        "modified": "2025-12-04T13:24:54.735Z",
+        "hash": "yljxgg"
+      },
+      {
+        "name": "window.svg",
+        "path": "window.svg",
+        "size": 385,
+        "modified": "2025-12-04T13:24:54.738Z",
+        "hash": "wt8b78"
+      }
+    ],
+    "fonts": [],
+    "icons": [
+      {
+        "name": "file.svg",
+        "path": "file.svg",
+        "size": 391,
+        "modified": "2025-12-04T13:24:54.719Z",
+        "hash": "kl4et"
+      },
+      {
+        "name": "globe.svg",
+        "path": "globe.svg",
+        "size": 1035,
+        "modified": "2025-12-04T13:24:54.725Z",
+        "hash": "nn4ek7"
+      },
+      {
+        "name": "next.svg",
+        "path": "next.svg",
+        "size": 1375,
+        "modified": "2025-12-04T13:24:54.730Z",
+        "hash": "drs93j"
+      },
+      {
+        "name": "vercel.svg",
+        "path": "vercel.svg",
+        "size": 128,
+        "modified": "2025-12-04T13:24:54.735Z",
+        "hash": "yljxgg"
+      },
+      {
+        "name": "window.svg",
+        "path": "window.svg",
+        "size": 385,
+        "modified": "2025-12-04T13:24:54.738Z",
+        "hash": "wt8b78"
+      }
+    ]
+  },
+  "optimization": {
+    "totalImages": 5,
+    "totalFonts": 0,
+    "totalSavings": 0,
+    "averageCompression": "0.00"
+  }
+}

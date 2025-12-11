@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You're Offline - Energy Drink App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .offline-container {
+            max-width: 500px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .offline-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        
+        .retry-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .retry-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .offline-features {
+            margin-top: 40px;
+            text-align: left;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            min-width: 30px;
+        }
+        
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .online {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        
+        .offline {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="connection-status" id="connectionStatus">
+        <span id="statusText">Checking connection...</span>
+    </div>
+    
+    <div class="offline-container">
+        <div class="offline-icon">📱</div>
+        <h1>You're Offline</h1>
+        <p class="subtitle">No internet connection detected</p>
+        
+        <p class="description">
+            Don't worry! You can still access cached content and your app data. 
+            We'll automatically sync everything when you're back online.
+        </p>
+        
+        <button class="retry-btn" onclick="checkConnection()">
+            🔄 Try Again
+        </button>
+        
+        <div class="offline-features">
+            <h3 style="margin-bottom: 20px; text-align: center;">Available Offline:</h3>
+            
+            <div class="feature">
+                <div class="feature-icon">🍹</div>
+                <div>
+                    <strong>Browse Flavors</strong><br>
+                    <small>View cached flavor recipes and information</small>
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">🧮</div>
+                <div>
+                    <strong>Caffeine Calculator</strong><br>
+                    <small>Calculate caffeine content for custom drinks</small>
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">📋</div>
+                <div>
+                    <strong>Safety Guidelines</strong><br>
+                    <small>Access safety limits and recommendations</small>
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">⚙️</div>
+                <div>
+                    <strong>App Settings</strong><br>
+                    <small>Configure preferences and offline options</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let retryTimeout;
+        
+        function checkConnection() {
+            const btn = document.querySelector('.retry-btn');
+            btn.textContent = '🔄 Checking...';
+            btn.disabled = true;
+            
+            // Try to fetch a small resource to test connectivity
+            fetch('/', { 
+                method: 'HEAD',
+                cache: 'no-cache'
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Connection restored, reload the page
+                    window.location.reload();
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            })
+            .catch(() => {
+                // Still offline
+                btn.textContent = '🔄 Try Again';
+                btn.disabled = false;
+                
+                // Show visual feedback
+                btn.style.animation = 'shake 0.5s ease-in-out';
+                setTimeout(() => {
+                    btn.style.animation = '';
+                }, 500);
+            });
+        }
+        
+        function updateConnectionStatus() {
+            const statusEl = document.getElementById('connectionStatus');
+            const statusText = document.getElementById('statusText');
+            
+            if (navigator.onLine) {
+                statusEl.className = 'connection-status online';
+                statusText.textContent = 'Back Online';
+                
+                // Auto-reload after showing online status
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                statusEl.className = 'connection-status offline';
+                statusText.textContent = 'Offline';
+            }
+        }
+        
+        // Listen for connection changes
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+        
+        // Check connection status on load
+        updateConnectionStatus();
+        
+        // Periodic connection check
+        setInterval(checkConnection, 30000); // Every 30 seconds
+        
+        // Add shake animation for retry button
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Service Worker messaging
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.ready.then(registration => {
+                // Send message to service worker that offline page is loaded
+                if (registration.active) {
+                    registration.active.postMessage({
+                        type: 'OFFLINE_PAGE_LOADED'
+                    });
+                }
+            });
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'r' && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                checkConnection();
+            }
+        });
+        
+        // Page visibility handling
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && navigator.onLine) {
+                checkConnection();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { AlertTriangle, CheckCircle, XCircle, Shield, Scale, Users } from 'lucide-react'
 import { SafetyValidator } from '@/components/safety/safety-validator'
 import { Ingredient } from '@/lib/types'
-import { limits, ingredients, addIngredient, removeIngredient } from '@/lib/safety-data-service'
+import { limits, ingredients, addIngredient, removeIngredient } from '@/lib/safety-data-service.client'
 import { calculateComplianceScore } from '@/lib/safety-validation-service'
 
 export default function SafetyPage() {
