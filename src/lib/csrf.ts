@@ -1,7 +1,8 @@
 import { createCSRFToken, validateCSRFToken } from 'next-csrf';
+import { secrets } from './secret-manager';
 
 const csrf = createCSRFToken({
-  secret: process.env.CSRF_SECRET || 'fallback-secret-change-in-production',
+  secret: secrets.getCsrfSecret(),
   salt: 'csrf-salt',
 });
 

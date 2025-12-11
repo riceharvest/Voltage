@@ -1,222 +1,206 @@
-import crypto from 'crypto';
+import { secrets } from './secret-manager';
 
-// EU country codes for IP-based detection (simplified list)
-const EU_COUNTRIES = [
-  'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR',
-  'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL',
-  'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'
-];
-
-// Encryption key for sensitive data (should be in env vars in production)
-const ENCRYPTION_KEY = process.env.GDPR_ENCRYPTION_KEY || 'fallback-key-change-in-production';
+// Encryption key for sensitive data (now using secure secret manager)
+const ENCRYPTION_KEY = secrets.getGdprEncryptionKey();
 const ALGORITHM = 'aes-256-gcm';
 
-export interface ConsentData {
-  necessary: boolean;
-  analytics: boolean;
-  marketing: boolean;
-  timestamp: string;
-  version: string;
-}
-
-export interface UserData {
-  ageVerified: boolean;
-  verificationTimestamp: string;
-  ipAddress?: string;
-  userAgent?: string;
-}
+// Consent cookie name
+const CONSENT_COOKIE_NAME = 'gdpr_consent';
+const CONSENT_COOKIE_MAX_AGE = 365 * 24 * 60 * 60; // 1 year in seconds
 
 /**
- * Detect if user is likely in EU based on IP geolocation
- * In production, use a proper geolocation service
+ * Check if a given IP address is from the EU/EEA
+ * Uses geo-IP database or external service
  */
-export async function isUserInEU(request: Request): Promise<boolean> {
+export async function isEUUpload(ipAddress: string): Promise<boolean> {
+  // In a real implementation, you would:
+  // 1. Use a geo-IP database (like MaxMind GeoIP2)
+  // 2. Call an external API service
+  // 3. Use Cloudflare/Netlify edge geo information
+  
+  // For development/testing, you might want to mock EU detection
+  if (process.env.NODE_ENV === 'development') {
+    // Check for a test header or default to false
+    return false; // or true for testing
+  }
+  
   try {
-    // Get client IP from headers (works with Vercel, Cloudflare, etc.)
-    const forwarded = request.headers.get('x-forwarded-for');
-    const realIP = request.headers.get('x-real-ip');
-    const clientIP = forwarded?.split(',')[0]?.trim() || realIP || '127.0.0.1';
-
-    // For development/testing, you might want to mock EU detection
-    if (process.env.NODE_ENV === 'development') {
-      // Check for a test header or default to false
-      return request.headers.get('x-test-eu-user') === 'true';
-    }
-
-    // In production, use a geolocation service
-    // This is a simplified implementation - in real app use MaxMind or similar
-    const response = await fetch(`http://ip-api.com/json/${clientIP}`);
+    // Example implementation using a free geo-IP service
+    // Note: In production, use a reliable geo-IP service
+    const response = await fetch(`http://ip-api.com/json/${ipAddress}`);
     const data = await response.json();
-
-    return EU_COUNTRIES.includes(data.countryCode);
+    
+    // EU countries list (as of 2024)
+    const euCountries = [
+      'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR',
+      'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL',
+      'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'
+    ];
+    
+    return euCountries.includes(data.countryCode);
   } catch (error) {
-    console.error('Error detecting EU user:', error);
-    // Default to requiring consent if detection fails
-    return true;
-  }
-}
-
-/**
- * Encrypt sensitive user data
- */
-export function encryptData(data: string): string {
-  const iv = crypto.randomBytes(16);
-  const cipher = crypto.createCipheriv(ALGORITHM, Buffer.from(ENCRYPTION_KEY), iv);
-  let encrypted = cipher.update(data, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
-  const authTag = cipher.getAuthTag();
-
-  return JSON.stringify({
-    encrypted,
-    iv: iv.toString('hex'),
-    authTag: authTag.toString('hex')
-  });
-}
-
-/**
- * Decrypt sensitive user data
- */
-export function decryptData(encryptedData: string): string {
-  try {
-    const { encrypted, iv, authTag } = JSON.parse(encryptedData);
-    const decipher = crypto.createDecipheriv(ALGORITHM, Buffer.from(ENCRYPTION_KEY), Buffer.from(iv, 'hex'));
-    decipher.setAuthTag(Buffer.from(authTag, 'hex'));
-    let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-    decrypted += decipher.final('utf8');
-    return decrypted;
-  } catch (error) {
-    console.error('Error decrypting data:', error);
-    throw new Error('Failed to decrypt data');
-  }
-}
-
-/**
- * Check if user has given consent for data processing
- */
-export function hasConsent(cookies: Record<string, string>): boolean {
-  const consentCookie = cookies['gdpr-consent'];
-  if (!consentCookie) return false;
-
-  try {
-    const consent: ConsentData = JSON.parse(consentCookie);
-    return consent.necessary === true;
-  } catch {
+    console.error('Error checking EU location:', error);
+    // Default to false if we can't determine location
     return false;
   }
 }
 
 /**
- * Get user's consent preferences
+ * Check if user is in EU (wrapper for consistency)
  */
-export function getConsentData(cookies: Record<string, string>): ConsentData | null {
-  const consentCookie = cookies['gdpr-consent'];
-  if (!consentCookie) return null;
-
-  try {
-    return JSON.parse(consentCookie);
-  } catch {
-    return null;
-  }
+export async function isUserInEU(ipAddress: string): Promise<boolean> {
+  return isEUUpload(ipAddress);
 }
 
 /**
- * Create consent cookie value
+ * Encrypt sensitive data using AES-256-GCM
  */
-export function createConsentCookie(consent: Partial<ConsentData>): string {
-  const consentData: ConsentData = {
-    necessary: true, // Always required
-    analytics: consent.analytics ?? false,
-    marketing: consent.marketing ?? false,
-    timestamp: new Date().toISOString(),
-    version: '1.0',
-    ...consent
-  };
-
-  return JSON.stringify(consentData);
+export function encryptData(data: string): string {
+  // Use Node.js crypto module
+  const crypto = require('crypto');
+  
+  const key = Buffer.from(ENCRYPTION_KEY, 'utf8');
+  const iv = crypto.randomBytes(12);
+  
+  const cipher = crypto.createCipheriv(ALGORITHM, key, iv);
+  let encrypted = cipher.update(data, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  
+  // Combine IV and encrypted data
+  const combined = iv.toString('hex') + ':' + encrypted;
+  return combined;
 }
 
 /**
- * Validate consent is current (not older than 1 year)
+ * Decrypt sensitive data using AES-256-GCM
  */
-export function isConsentValid(consent: ConsentData): boolean {
-  const consentDate = new Date(consent.timestamp);
-  const oneYearAgo = new Date();
-  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-
-  return consentDate > oneYearAgo && consent.version === '1.0';
+export function decryptData(encryptedData: string): string {
+  // Use Node.js crypto module
+  const crypto = require('crypto');
+  
+  const key = Buffer.from(ENCRYPTION_KEY, 'utf8');
+  
+  // Split IV and encrypted data
+  const parts = encryptedData.split(':');
+  const iv = Buffer.from(parts[0], 'hex');
+  const encrypted = parts[1];
+  
+  const decipher = crypto.createDecipheriv(ALGORITHM, key, iv);
+  let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  
+  return decrypted;
 }
 
 /**
- * Data retention policy: delete data older than specified days
- */
-export function shouldDeleteData(timestamp: string, retentionDays: number = 2555): boolean {
-  // GDPR: 2555 days (7 years) for general data, but we can be more restrictive
-  const dataDate = new Date(timestamp);
-  const retentionDate = new Date();
-  retentionDate.setDate(retentionDate.getDate() - retentionDays);
-
-  return dataDate < retentionDate;
-}
-
-/**
- * Anonymize IP address for privacy
+ * Anonymize IP address by removing last octet
  */
 export function anonymizeIP(ip: string): string {
-  // Remove last octet for IPv4, or mask for IPv6
-  if (ip.includes('.')) {
-    // IPv4
-    const parts = ip.split('.');
+  const parts = ip.split('.');
+  if (parts.length === 4) {
     return `${parts[0]}.${parts[1]}.${parts[2]}.0`;
-  } else if (ip.includes(':')) {
-    // IPv6 - mask last 64 bits
-    const parts = ip.split(':');
-    return `${parts.slice(0, 4).join(':')}::`;
   }
   return ip;
 }
 
 /**
- * Validate consent cookie integrity using HMAC
+ * Create consent cookie with encrypted consent data
  */
-export function validateCookieIntegrity(cookies: Record<string, string>): boolean {
-  const consentCookie = cookies['gdpr-consent'];
-  const signatureCookie = cookies['gdpr-consent-signature'];
+export function createConsentCookie(consentData: any, isSecure: boolean = false): string {
+  const consentString = JSON.stringify({
+    ...consentData,
+    timestamp: new Date().toISOString(),
+    version: '1.0'
+  });
   
-  if (!consentCookie || !signatureCookie) {
+  const encrypted = encryptData(consentString);
+  return encrypted;
+}
+
+/**
+ * Get consent data from cookie
+ */
+export function getConsentData(encryptedConsent: string): any {
+  try {
+    const decrypted = decryptData(encryptedConsent);
+    return JSON.parse(decrypted);
+  } catch (error) {
+    console.error('Error parsing consent data:', error);
+    return null;
+  }
+}
+
+/**
+ * Get consent status for analytics
+ */
+export function getConsentStatus(consentData: any): boolean {
+  return consentData?.analytics === true;
+}
+
+/**
+ * Check if consent is valid and not expired
+ */
+export function isConsentValid(consentData: any): boolean {
+  if (!consentData || !consentData.timestamp) {
     return false;
   }
+  
+  const consentDate = new Date(consentData.timestamp);
+  const now = new Date();
+  const daysDiff = (now.getTime() - consentDate.getTime()) / (1000 * 3600 * 24);
+  
+  // Consent is valid for 1 year
+  return daysDiff < 365;
+}
 
+/**
+ * Check if user has given consent
+ */
+export function hasConsent(consentData: any, type: 'analytics' | 'marketing' | 'necessary'): boolean {
+  if (!consentData) return false;
+  if (type === 'necessary') return true; // Necessary cookies don't require consent
+  
+  return consentData[type] === true;
+}
+
+/**
+ * Validate cookie integrity
+ */
+export function validateCookieIntegrity(encryptedData: string): boolean {
   try {
-    // Create HMAC signature for the consent data
-    const expectedSignature = crypto
-      .createHmac('sha256', ENCRYPTION_KEY)
-      .update(consentCookie)
-      .digest('hex');
+    const decrypted = decryptData(encryptedData);
+    const parsed = JSON.parse(decrypted);
     
-    // Compare signatures
-    return expectedSignature === signatureCookie;
+    // Check if required fields exist
+    return parsed && 
+           typeof parsed === 'object' && 
+           'timestamp' in parsed && 
+           'version' in parsed;
   } catch (error) {
-    console.error('Error validating cookie integrity:', error);
     return false;
   }
 }
 
 /**
- * Get consent status for analytics tracking
+ * Check if data should be deleted based on retention policy
  */
-export function getConsentStatus(): { analytics: boolean } {
-  if (typeof window === 'undefined') {
-    return { analytics: false };
-  }
+export function shouldDeleteData(createdAt: string, retentionDays: number = 730): boolean {
+  const created = new Date(createdAt);
+  const now = new Date();
+  const daysDiff = (now.getTime() - created.getTime()) / (1000 * 3600 * 24);
+  
+  return daysDiff > retentionDays;
+}
 
-  const cookies = document.cookie.split(';').reduce((acc, cookie) => {
-    const [key, value] = cookie.trim().split('=');
-    acc[key] = value;
-    return acc;
-  }, {} as Record<string, string>);
-
-  const consentData = getConsentData(cookies);
+/**
+ * Generate secure consent cookie options
+ */
+export function getCookieOptions(isProduction: boolean = false) {
   return {
-    analytics: consentData?.analytics === true
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: 'strict' as const,
+    maxAge: CONSENT_COOKIE_MAX_AGE,
+    path: '/'
   };
 }
