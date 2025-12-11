@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# emergency backups and logs
+emergency-backup-*
+emergency-rollback-*.log
+*.backup
+audit-ci.json
+*secret-scan-results.json
+*-secret-scan-results.json
+security-*-results.json
+security-report.json
