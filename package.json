@@ -56,7 +56,7 @@
     "next-csrf": "^0.2.1",
     "next-intl": "^4.5.8",
     "playwright": "^1.57.0",
-    "react": "19.2.1",
+    "react": "19.2.3",
     "react-dom": "19.2.1",
     "redis": "^5.10.0",
     "tailwind-merge": "^3.4.0",
